@@ -16,6 +16,11 @@ const eventoSchema = new Schema({
     endereco: {
         type: String,
         required: true,
+        maxlength: 10,
+    },
+    contato: {
+        type: [String],
+        required: true,
         maxlength: 200,
     },
     data_evento: {
@@ -30,11 +35,15 @@ const eventoSchema = new Schema({
     access_code: {
         type: String,
         required: true,
-        unique: true,
-        maxlength: 20
+        maxlength: 4
+    },
+    subhost: {
+        // arrays de cpfs das pessoas que poderam validar ingressos no evento
+        type: [String],
+        required: true,    
     },
     tipos_ingressos: {
-        type: [String],
+        type: [Object],
         required: true,
     },
     img_url: {
@@ -53,7 +62,6 @@ const eventoSchema = new Schema({
     },
     { timestamps: false }
 )
-eventoSchema.index({ access_code: 1 }, { unique: true });
 
 const Evento = mongoose.model('Evento', eventoSchema)
 

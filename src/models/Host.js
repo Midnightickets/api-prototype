@@ -25,8 +25,8 @@ const hostSchema = new Schema({
         maxlength: 30,
         unique: true,
     },
-    contato:{
-        type: [String],
+    telefone:{
+        type: String,
         required: true,
         maxlength: 30,
     },
@@ -43,7 +43,6 @@ const hostSchema = new Schema({
     pacote:{
         type: Schema.Types.ObjectId,
         ref: 'Pacote',
-        required: true,
     },
     logado:{
         type: Boolean, 
