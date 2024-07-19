@@ -1,10 +1,12 @@
 const HostManager = require("../managers/HostManager");
 
 const hostController = {
-    createHost: (req, res) => {
+    criar_host: (req, res) => {
         HostManager.createHost(req.body)
             .then((host) => res.status(201).json(host))
-            .catch((error) => res.status(400).json(error));
+            .catch((error) => {
+                res.status(400).json({ error: error.message });
+            });
     },
 }
 

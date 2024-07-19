@@ -12,7 +12,7 @@ const hostSchema = new Schema({
     senha:{
         type: String,
         required: true,
-        maxlength: 20,
+        maxlength: 100,
     },
     nome_razao: {
         type: String,

@@ -12,8 +12,7 @@ const usuarioSchema = new Schema({
     senha:{
         type: String,
         required: true,
-        maxlength: 20,
-
+        maxlength: 100,
     },
     nome: {
         type: String,

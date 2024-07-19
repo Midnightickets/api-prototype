@@ -16,7 +16,7 @@ const eventoSchema = new Schema({
     endereco: {
         type: String,
         required: true,
-        maxlength: 10,
+        maxlength: 100,
     },
     contato: {
         type: [String],
@@ -37,7 +37,7 @@ const eventoSchema = new Schema({
         required: true,
         maxlength: 4
     },
-    subhost: {
+    subhosts: {
         // arrays de cpfs das pessoas que poderam validar ingressos no evento
         type: [String],
         required: true,    
