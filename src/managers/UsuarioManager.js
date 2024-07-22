@@ -1,0 +1,36 @@
+const { Usuario: UsuarioModel } = require("../models/Usuario");
+const bcrypt = require("bcrypt");
+const ErrorEnum = require("../enums/Enums");
+
+const UsuarioManager = {
+    createUsuario: async (usuario) => {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(usuario.senha, salt);
+        usuario.senha = hashedPassword;
+        return await UsuarioModel.create(usuario);
+    },
+    getUser: async (user) => {
+        if(!user.senha || user.senha.trim() === '' || user.senha === undefined) {
+            throw new Error(ErrorEnum.PASSWORD_REQUIRED);
+        }
+        return await UsuarioModel.findOne(user);
+    },
+    login: async (user) => {
+        const usuario = await UsuarioModel.findOne({login: user.login});
+        if (usuario && (await bcrypt.compare(user.senha, usuario.senha))) {
+            usuario.logado = true;
+            usuario.save();
+            return usuario;
+        } else {
+            return null;
+        }
+    },
+    logout: async (user) => {
+        const usuario = await UsuarioModel.findOne({login: user.login, senha: user.senha});
+        usuario.logado = false;
+        usuario.save();
+        return true
+    },
+}
+
+module.exports = UsuarioManager;    

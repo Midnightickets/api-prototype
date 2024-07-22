@@ -16,7 +16,6 @@ const pacoteSchema = new Schema({
     regras: {
         type: String,
         required: true,
-        maxlength: 600,
     },
     },
     { timestamps: true }

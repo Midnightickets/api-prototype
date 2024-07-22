@@ -40,6 +40,10 @@ const hostSchema = new Schema({
         type: Number,
         required: true,
     },
+    pix:{
+        type: String,
+        required: true,
+    },
     pacote:{
         type: Schema.Types.ObjectId,
         ref: 'Pacote',

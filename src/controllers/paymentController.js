@@ -1,8 +1,7 @@
-require("dotenv").config();
 const PaymentManager = require("../managers/PaymentManager");
 
 const MPpaymentController = {
-  getPagamento: async (req, res) => {
+  buscar_pagamento: async (req, res) => {
     try {
       const response = await PaymentManager.buscarPagamento(req.body.id);
       return res.status(200).json(response);
@@ -18,7 +17,7 @@ const MPpaymentController = {
       return res.status(400).json(error);
     }
   },
-  createPreference: async (req, res) => {
+  criar_preference: async (req, res) => {
     const { items, purpose } = req.body;
     try {
       const response = await PaymentManager.createPreference(items, purpose);

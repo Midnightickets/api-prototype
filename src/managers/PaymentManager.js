@@ -3,7 +3,8 @@ const { MercadoPagoConfig, Preference } = require("mercadopago");
 const mercadopago = require("mercadopago");
 const { v4: uuidv4 } = require("uuid");
 const client = new MercadoPagoConfig({
-  accessToken: process.env.PROD_ACCESS_TOKEN,
+  // accessToken: process.env.PROD_ACCESS_TOKEN,
+  accessToken: process.env.MP_ACCESS_TOKENPROD_ACCESS_TOKEN,
 });
 const preference = new Preference(client);
 const payment = new mercadopago.Payment(client);

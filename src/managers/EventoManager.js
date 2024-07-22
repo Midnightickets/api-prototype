@@ -3,7 +3,7 @@ const { Evento: EventoModel } = require('../models/Evento');
 const HostManager = require('./HostManager');
 
 const EventoManager = {
-    criar_evento: async (evento, host) => {
+    createEvento: async (evento, host) => {
         if (!await HostManager.getHostById(host)) {
             throw new Error(ErrorEnum.HOST_NOT_FOUND);
         }
