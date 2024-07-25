@@ -1,6 +1,7 @@
 const { ErrorEnum } = require("../enums/Enums");
 const { Host: HostModel } = require("../models/Host");
 const bcrypt = require('bcrypt');
+const Utils = require("../utils");
 
 const HostValidations = {
     startHostValidations: async (host) => {
@@ -31,6 +32,7 @@ const HostValidations = {
         }
     },
     validaCpfCnpj: async (host) => {
+        // FAZER VALIDACAO CPF E CNPJ
         const hostObject = await HostModel.find({ cpf_cnpj: host.cpf_cnpj });
         if (hostObject.length > 0) {
             throw new Error(ErrorEnum.CPF_CNPJ_EXISTENTE);
@@ -72,7 +74,10 @@ const HostManager = {
         }
     },
     getHostById: async (host) => {
-        const hostObject = await HostModel.find({ _id: host.id, senha: host.senha_crip });
+        const hostObject = await HostModel.find({ _id: host.id, senha: host.senha });
+        if (hostObject.length === 0) {
+            throw new Error(ErrorEnum.HOST_NOT_FOUND);
+        }
         return hostObject;
     },
     deleteHost: async (id) => {

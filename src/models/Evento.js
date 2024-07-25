@@ -10,7 +10,6 @@ const eventoSchema = new Schema({
     },
     descricao: {
         type: String,
-        required: true,
         maxlength: 400,
     },
     endereco: {
@@ -21,7 +20,7 @@ const eventoSchema = new Schema({
     contato: {
         type: [String],
         required: true,
-        maxlength: 200,
+        maxlength: 10,
     },
     data_evento: {
         type: Date,
@@ -32,14 +31,18 @@ const eventoSchema = new Schema({
         required: true,
         maxlength: 400,
     },
-    access_code: {
-        type: String,
+    idEventoOptions: {
+        type: Number,
         required: true,
     },
     subhosts: {
         // arrays de cpfs das pessoas que poderam validar ingressos no evento
         type: [String],
-        required: true,    
+        required: true,  
+    },
+    qtd_ingressos: {
+        type: Number,
+        required: true,
     },
     tipos_ingressos: {
         type: [Object],
