@@ -40,13 +40,17 @@ const hostSchema = new Schema({
         type: Number,
         required: true,
     },
+    purpleCoins:{
+        type: Number,
+        required: true,
+    },
+    subCoins:{
+        type: Number,
+        required: true,
+    },
     pix:{
         type: String,
         required: true,
-    },
-    pacote:{
-        type: Schema.Types.ObjectId,
-        ref: 'Pacote',
     },
     logado:{
         type: Boolean, 

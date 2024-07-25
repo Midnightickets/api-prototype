@@ -35,7 +35,6 @@ const eventoSchema = new Schema({
     access_code: {
         type: String,
         required: true,
-        maxlength: 4
     },
     subhosts: {
         // arrays de cpfs das pessoas que poderam validar ingressos no evento
