@@ -48,8 +48,8 @@ const hostSchema = new Schema({
         type: Number,
         required: true,
     },
-    pix:{
-        type: String,
+    saque:{
+        type: [Object],
         required: true,
     },
     logado:{

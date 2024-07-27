@@ -1,22 +1,17 @@
 const { ErrorEnum } = require("../enums/Enums");
 const { Host: HostModel } = require("../models/Host");
 const bcrypt = require('bcrypt');
-const Utils = require("../utils");
+
 
 const HostValidations = {
     startHostValidations: async (host) => {
-        try {
             await HostValidations.checkREQUIRED(host);
             await HostValidations.validaSenha(host);
             await HostValidations.validaEmailLoginTelefone(host);
             await HostValidations.validaCpfCnpj(host);
-        } catch (error) {
-            console.log(error + 'ERROR: hostValidations');
-            throw new Error(ErrorEnum.SISTEMA_GENERICO);
-        }
     },
     checkREQUIRED: async (host) => {
-        if (!host.email || !host.login || !host.senha || !host.nome_razao || !host.telefone || !host.cpf_cnpj || !host.pix) {
+        if (!host.email || !host.login || !host.senha || !host.nome_razao || !host.telefone || !host.cpf_cnpj || !host.saque) {
             throw new Error(ErrorEnum.REQUIRED_FIELDS);
         }
     },
@@ -42,16 +37,11 @@ const HostValidations = {
 
 const HostInicialization = {
     startHostInicialization: async (host) => {
-        try {
             await HostInicialization.criptografarSenha(host);
             host.saldo = 0;
             host.purpleCoins = 0;
             host.subCoins = 0;
             host.logado = true;
-        }  catch (error) {
-            console.log(error + 'ERROR: hostInicialization');
-            throw new Error(ErrorEnum.SISTEMA_GENERICO);
-        }
     },
     criptografarSenha: async (host) => {
         const salt = await bcrypt.genSalt(10);
@@ -78,12 +68,14 @@ const HostManager = {
         if (hostObject.length === 0) {
             throw new Error(ErrorEnum.HOST_NOT_FOUND);
         }
-        return hostObject;
+        return hostObject[0];
     },
-    deleteHost: async (id) => {
-        return HostModel.findByIdAndDelete(id);
-    },
-    
+    usarPurpleCoins: async (host, pct) => {
+        host.purpleCoins -= pct.purpleCoins
+        await host.save()
+        const msg = (pct.purpleCoins.toString() + ' PurpleCoins utilizados com sucesso Saldo atual: ' + host.purpleCoins.toString())
+        return msg
+    }
 };
 
 module.exports = HostManager;
