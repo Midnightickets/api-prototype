@@ -22,6 +22,10 @@ const ErrorEnum = {
     PASSWORD_LENGTH: 'Senha deve ter entre 8 e 20 caracteres',
     // UTILS
     CPF_INVALIDO: 'CPF inválido',
+    // PACOTE
+    INVALID_PACOTE_EVENTO: 'Pacote de ingressos inválido',
+    INVALID_COIN: 'Moeda virtual inválida',
+    PURPLECOINS_INSUFICIENTE: 'Saldo de PurpleCoins insuficiente'
 }
 
 module.exports = {
