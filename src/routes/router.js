@@ -12,6 +12,6 @@ router.use('/', paymentRouter);
 router.use('/', hostRouter);
 router.use('/', eventoRouter);
 router.use('/', usuarioRouter);
-router.use('/email', landingRouter);
+router.use('/landing', landingRouter);
 
 module.exports = router;
