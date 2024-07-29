@@ -6,7 +6,6 @@ const landingSchema = new Schema({
     email: {
         type: String,
         required: true,
-        unique: true,
     },
     dispositivo: {
         // rastrear qual o tamanho da tela do dispositivo ou tipo de dispositivo
@@ -14,7 +13,7 @@ const landingSchema = new Schema({
         required: true,
     },
     // objeto para armazenar os dados do formulário preenchidos pelo usuário (opcional)
-    forms: {
+    form: {
         type: Object,
     }
     },
