@@ -20,8 +20,6 @@ const landingSchema = new Schema({
     { timestamps: true }
 )
 
-landingSchema.index({ email: 1 }, { unique: true });
-
 const Landing = mongoose.model('Landing', landingSchema)
 
 Landing.createIndexes();
