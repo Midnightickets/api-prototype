@@ -1,6 +1,15 @@
 const { Usuario: UsuarioModel } = require("../models/Usuario");
 const bcrypt = require("bcrypt");
 const ErrorEnum = require("../enums/Enums");
+require('dotenv').config();
+// const accountSid = process.env.ACCOUNT_SID;
+// const authToken = 'process.env.AUTH_TOKEN;
+// const client = require('twilio')(accountSid, authToken);
+
+// client.verify.v2.services(process.env.VERIFY_SERVICE_SID)
+//       .verifications
+//       .create({to: '+55' + usuario.telefone.replace(/[^\d]/g, ''), channel: 'sms'})
+    //   .then(verification => console.log(verification.sid));
 
 const UsuarioManager = {
     createUsuario: async (usuario) => {

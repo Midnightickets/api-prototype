@@ -22,7 +22,6 @@ const landingSchema = new Schema({
 
 const Landing = mongoose.model('Landing', landingSchema)
 
-Landing.createIndexes();
 module.exports = {
     Landing,
     landingSchema,
