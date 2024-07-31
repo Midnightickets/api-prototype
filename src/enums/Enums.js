@@ -1,4 +1,6 @@
 const SuccessEnum = {
+    // HOST
+    LOGIN_SUCCESS: 'Login realizado com sucesso',
     // EVENTO
     CREATE_EVENTO: 'Evento criado com sucesso',
     CREATE_HOST: 'Host criado com sucesso',
@@ -7,8 +9,9 @@ const SuccessEnum = {
 const ErrorEnum = {
     // SISTEMA
     SISTEMA_GENERICO: 'Erro no sistema',
-    // EVENTO
+    LOGIN_ERROR: 'Erro no login',
     REQUIRED_FIELDS: 'Campos obrigatórios não preenchidos',
+    // EVENTO
     EVENTO_TITULO_EXISTENTE: 'Já existe um evento com esse título para esse host',
     INVALID_SUBHOSTS: 'Subhosts inválidos',
     INVALID_TIPOS_INGRESSOS: 'Tipos de ingressos inválidos',

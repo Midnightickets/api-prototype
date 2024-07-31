@@ -1,11 +1,11 @@
 const { ErrorEnum } = require("../enums/Enums");
 
 const EventoPacotes = [
-    { value: 1, titulo: '6% de Cada Ingresso Start', purpleCoins: 0, max_ingressos: 15000, },
-    { value: 2, titulo: '0% de taxa - 100 ingressos por 1 PurpleCoin🟣', purpleCoins: 1, max_ingressos: 100,},
-    { value: 3, titulo: '0% de taxa - 200 ingressos por 2 PurpleCoins🟣', purpleCoins: 2, max_ingressos: 200},
-    { value: 4, titulo: '0% de taxa - 300 ingressos por 3 PurpleCoins🟣', purpleCoins: 3, max_ingressos: 300},
-    { value: 5, titulo: '0% de taxa - 2000 ingressos por 10 PurpleCoins🟣', purpleCoins: 10, max_ingressos: 2000}
+    { value: 1, label: '6% de Cada Ingresso - 1000 ingressos', purpleCoins: 0, max_ingressos: 1000, },
+    { value: 2, label: '0% de taxa - 100 ingressos por 1 PurpleCoin🟣', purpleCoins: 1, max_ingressos: 100,},
+    { value: 3, label: '0% de taxa - 200 ingressos por 2 PurpleCoins🟣', purpleCoins: 2, max_ingressos: 200},
+    { value: 4, label: '0% de taxa - 300 ingressos por 3 PurpleCoins🟣', purpleCoins: 3, max_ingressos: 300},
+    { value: 5, label: '0% de taxa - 2000 ingressos por 10 PurpleCoins🟣', purpleCoins: 10, max_ingressos: 2000}
 ];
 
 const CoinsValores = [

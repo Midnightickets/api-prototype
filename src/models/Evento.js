@@ -26,6 +26,14 @@ const eventoSchema = new Schema({
         type: Date,
         required: true,
     },
+    hora_evento: {
+        type: String,
+        required: true,
+    },
+    hora_final: {
+        type: String,
+        required: true,
+    },
     localizacao: {
         type: String,
         required: true,

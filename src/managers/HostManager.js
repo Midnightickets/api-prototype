@@ -2,7 +2,6 @@ const { ErrorEnum } = require("../enums/Enums");
 const { Host: HostModel } = require("../models/Host");
 const bcrypt = require('bcrypt');
 
-
 const HostValidations = {
     startHostValidations: async (host) => {
             await HostValidations.checkREQUIRED(host);
@@ -64,6 +63,9 @@ const HostManager = {
         }
     },
     getHostById: async (host) => {
+        if(!host.id || !host.senha) {
+            throw new Error(ErrorEnum.REQUIRED_FIELDS);
+        }
         const hostObject = await HostModel.find({ _id: host.id, senha: host.senha });
         if (hostObject.length === 0) {
             throw new Error(ErrorEnum.HOST_NOT_FOUND);
@@ -75,6 +77,19 @@ const HostManager = {
         await host.save()
         const msg = (pct.purpleCoins.toString() + ' PurpleCoins utilizados com sucesso Saldo atual: ' + host.purpleCoins.toString())
         return msg
+    },
+    loginHost: async (hostReq) => {
+            if (!hostReq.login || !hostReq.senha) {
+                throw new Error(ErrorEnum.REQUIRED_FIELDS);
+            }
+            const host = await HostModel.findOne({login: hostReq.login});
+            if (host && (await bcrypt.compare(hostReq.senha, host.senha))) {
+                host.logado = true;
+                host.save();
+                return host;
+            } else {
+                throw new Error(ErrorEnum.HOST_NOT_FOUND);
+            }
     }
 };
 

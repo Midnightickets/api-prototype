@@ -27,7 +27,35 @@ const Utils = {
         if (digit2 !== parseInt(cpfClean[10])) throw new Error(ErrorEnum.CPF_INVALIDO);
 
         return true;
-    }
+    },
+    validaCNPJ: async (cnpj) => {
+        // Remove caracteres não numéricos
+        const cnpjClean = cnpj.replace(/[^\d]/g, '');
+
+        // Verifica se o CNPJ tem 14 dígitos
+        if (cnpjClean.length !== 14) throw new Error(ErrorEnum.CNPJ_INVALIDO);
+
+        // Função para calcular o dígito verificador
+        const calcDigit = (cnpj, factor) => {
+            let total = 0;
+            for (let i = 0; i < factor - 1; i++) {
+                total += cnpj[i] * (factor - i);
+            }
+            const remainder = total % 11;
+            return remainder < 2 ? 0 : 11 - remainder;
+        };
+
+        // Verifica o primeiro dígito
+        const digit1 = calcDigit(cnpjClean, 13);
+        if (digit1 !== parseInt(cnpjClean[12])) throw new Error(ErrorEnum.CNPJ_INVALIDO);
+
+        // Verifica o segundo dígito
+        const digit2 = calcDigit(cnpjClean, 14);
+        if (digit2 !== parseInt(cnpjClean[13])) throw new Error(ErrorEnum.CNPJ_INVALIDO);
+
+        return true;
+    },
+
 }
 
 module.exports = Utils;

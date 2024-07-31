@@ -7,7 +7,7 @@ const usuarioSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        maxlength: 30
+        maxlength: 14
     },
     senha:{
         type: String,
