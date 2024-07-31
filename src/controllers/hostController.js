@@ -14,7 +14,7 @@ const hostController = {
     login_host: async (req, res) => {
         await HostManager.loginHost(req.body)
             .then((host) =>{
-                res.status(200).json({host,  message: SuccessEnum.LOGIN_SUCCESS });
+                res.status(200).json({host,  role: 'host' });
             })
             .catch((error) => {
                 res.status(400).json({ error: error.message });
