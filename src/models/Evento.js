@@ -18,9 +18,9 @@ const eventoSchema = new Schema({
         maxlength: 100,
     },
     contato: {
-        type: [String],
+        type: String,
         required: true,
-        maxlength: 10,
+        maxlength: 100,
     },
     data_evento: {
         type: Date,
@@ -32,11 +32,9 @@ const eventoSchema = new Schema({
     },
     hora_final: {
         type: String,
-        required: true,
     },
     localizacao: {
         type: String,
-        required: true,
         maxlength: 400,
     },
     idEventoOptions: {
