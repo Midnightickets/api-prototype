@@ -5,7 +5,8 @@ const PacoteManager = require("./PacoteManager");
 const Utils = require("../utils");
 
 const EventoValidations = {
-  startEventoValidations: async (evento, host) => {
+  startCreateEventoValidations: async (evento, host) => {
+    //fluxo de validacao para criacao de eventos
     await EventoValidations.checkREQUIRED(evento);
     await EventoValidations.validaTituloEventoHost(evento, host);
     await EventoValidations.validaSubhosts(evento.subhosts);
@@ -98,11 +99,13 @@ const EventoValidations = {
 const EventoManager = {
   createEvento: async (evento, host) => {
     const myhost = await HostManager.getHostById(host);
+    evento.subhosts = [myhost.cpf_cnpj];
+    console.log(evento, host);
     const pct = await EventoValidations.verificarSaldoPurpleCoinsHostPacote(
       myhost,
       evento
     );
-    await EventoValidations.startEventoValidations(evento, host);
+    await EventoValidations.startCreateEventoValidations(evento, host);
     const msgPurpleCoins = await HostManager.usarPurpleCoins(myhost, pct);
     const eventoObject = {
       ...evento,
