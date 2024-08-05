@@ -8,6 +8,7 @@ const eventoController = {
             res.status(201).json({evento, message: SuccessEnum.CREATE_EVENTO});
         })
         .catch((err) => {
+            console.log(err);
             res.status(400).json({ error: err.message });
         });
     }

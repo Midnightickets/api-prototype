@@ -23,7 +23,7 @@ const eventoSchema = new Schema({
         maxlength: 100,
     },
     data_evento: {
-        type: Date,
+        type: String,
         required: true,
     },
     hora_evento: {
@@ -37,8 +37,8 @@ const eventoSchema = new Schema({
         type: String,
         maxlength: 400,
     },
-    idEventoOptions: {
-        type: Number,
+    pacote: {
+        type: Object,
         required: true,
     },
     subhosts: {

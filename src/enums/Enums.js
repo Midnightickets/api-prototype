@@ -9,6 +9,7 @@ const SuccessEnum = {
 const ErrorEnum = {
     // SISTEMA
     SISTEMA_GENERICO: 'Erro no sistema',
+    CREATE_EVENTO_GENERIC: 'Erro ao validar evento',
     LOGIN_ERROR: 'Erro no login',
     REQUIRED_FIELDS: 'Campos obrigatórios não preenchidos',
     // EVENTO
@@ -23,6 +24,7 @@ const ErrorEnum = {
     LOGIN_EXISTENTE: 'Já existe um host com esse email, login ou telefone',
     // SENHA
     PASSWORD_LENGTH: 'Senha deve ter entre 8 e 20 caracteres',
+    INCORRECT_PASSWORD: 'Senha incorreta',
     // UTILS
     CPF_INVALIDO: 'CPF inválido',
     INVALID_EMAIL: 'Email inválido',

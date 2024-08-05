@@ -66,13 +66,24 @@ const HostManager = {
         if(!host.id || !host.senha) {
             throw new Error(ErrorEnum.REQUIRED_FIELDS);
         }
-        const hostObject = await HostModel.find({ _id: host.id, senha: host.senha });
-        if (hostObject.length === 0) {
+        const hostObject = await HostModel.findOne({ _id: host.id });
+        if (!hostObject) {
             throw new Error(ErrorEnum.HOST_NOT_FOUND);
         }
-        return hostObject[0];
+        else {
+            if (await bcrypt.compare(host.senha, hostObject.senha)) {
+                return hostObject;
+            } else {
+                throw new Error(ErrorEnum.INCORRECT_PASSWORD);
+            }
+        }
     },
-    usarPurpleCoins: async (host, pct) => {
+    usarPurpleCoins: async (host, pct, totalIngressos) => {
+        if (host.purpleCoins < pct.purpleCoins) {
+            throw new Error(ErrorEnum.PURPLECOINS_INSUFICIENTE);
+        }
+        const coinsCashBack =  pct.max_ingressos - totalIngressos
+        host.subCoins += coinsCashBack
         host.purpleCoins -= pct.purpleCoins
         await host.save()
         const msg = (pct.purpleCoins.toString() + ' PurpleCoins utilizados com sucesso Saldo atual: ' + host.purpleCoins.toString())
@@ -85,8 +96,16 @@ const HostManager = {
             const host = await HostModel.findOne({login: hostReq.login});
             if (host && (await bcrypt.compare(hostReq.senha, host.senha))) {
                 host.logado = true;
-                host.save();
-                return host;
+                await host.save();
+                const hostResponse = {
+                    id: host._id,
+                    login: host.login,
+                    nome_razao: host.nome_razao,
+                    saldo: host.saldo,
+                    purpleCoins: host.purpleCoins,
+                    subCoins: host.subCoins,
+                }
+                return hostResponse;
             } else {
                 throw new Error(ErrorEnum.HOST_NOT_FOUND);
             }

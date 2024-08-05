@@ -1,4 +1,3 @@
-const { SuccessEnum } = require("../enums/Enums");
 const HostManager = require("../managers/HostManager");
 
 const hostController = {
