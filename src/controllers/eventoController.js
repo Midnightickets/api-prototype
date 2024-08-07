@@ -11,7 +11,17 @@ const eventoController = {
             console.log(err);
             res.status(400).json({ error: err.message });
         });
-    }
+    },
+    buscar_eventos: async (req, res) => {
+        await EventoManager.getEventoByHost(req.body.host, req.body.evento)
+        .then((eventos) => {
+            res.status(200).json(eventos);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ error: err.message });
+        });
+    },
 }
 
 module.exports = eventoController;

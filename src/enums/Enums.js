@@ -18,6 +18,7 @@ const ErrorEnum = {
     INVALID_TIPOS_INGRESSOS: 'Tipos de ingressos inválidos',
     INVALID_QTD_INGRESSOS: 'Quantidade de ingressos inválida',
     INVALID_LOCALIZACAO: 'Localização inválida',
+    EVENTO_NOT_FOUND: 'Evento não encontrado',
     // HOST
     HOST_NOT_FOUND: 'Host não encontrado',
     CPF_CNPJ_EXISTENTE: 'Já existe um host com esse CPF/CNPJ',
@@ -34,7 +35,16 @@ const ErrorEnum = {
     PURPLECOINS_INSUFICIENTE: 'Saldo de PurpleCoins insuficiente'
 }
 
+const StatusEnum = {
+    // EVENTO
+    PENDENTE: '🟡 Pendente',
+    EM_ANDAMENTO: '🟢 Em andamento',
+    FINALIZADO: '🟣 Finalizado',
+    CANCELADO: '🔴 Cancelado'
+}
+
 module.exports = {
     SuccessEnum,
-    ErrorEnum
+    ErrorEnum,
+    StatusEnum
 }

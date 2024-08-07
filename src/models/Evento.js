@@ -63,9 +63,9 @@ const eventoSchema = new Schema({
         ref: 'Host',
         required: true
     },
-    img_type: {
+    status: {
         type: String,
-        required: false
+        required: true
     }
     },
     { timestamps: false }

@@ -1,17 +1,17 @@
-const { ErrorEnum } = require("../enums/Enums");
+const { ErrorEnum, StatusEnum } = require("../enums/Enums");
 const { Evento: EventoModel } = require("../models/Evento");
 const HostManager = require("./HostManager");
 const PacoteManager = require("./PacoteManager");
 const Utils = require("../utils");
 
-const EventoValidations = {
-  startCreateEventoValidations: async (evento, host) => {
+const EventoActions = {
+  startCreateEventoAction: async (evento, host) => {
     //fluxo de validacao para criacao de eventos
-    await EventoValidations.checkREQUIRED(evento);
-    await EventoValidations.validaTituloEventoHost(evento, host);
-    await EventoValidations.validaSubhosts(evento.subhosts);
-    await EventoValidations.validaQtdIngressos(evento);
-    await EventoValidations.validaLocalizacao(evento);
+    await EventoActions.checkREQUIRED(evento);
+    await EventoActions.validaTituloEventoHost(evento, host);
+    await EventoActions.validaSubhosts(evento.subhosts);
+    await EventoActions.validaQtdIngressos(evento);
+    await EventoActions.validaLocalizacao(evento);
   },
   checkREQUIRED: async (evento) => {
     // console.log(evento);
@@ -93,24 +93,44 @@ const EventoValidations = {
     }
     return pct;
   },
+  montarResponseEventos: (eventos) => {
+    return eventos.map((evento) => {
+      return {
+        id: evento._id,
+        titulo: evento.titulo,
+        data_evento:
+          evento.data_evento.replaceAll("-", "/") + " às " + evento.hora_evento,
+        status: evento.status,
+        pacote: evento.pacote.label,
+        subhosts: evento.subhosts.length,
+        tipos_ingressos: evento.tipos_ingressos.length + " tipo(s)",
+        qtd_ingressos: evento.qtd_ingressos,
+      };
+    });
+  },
 };
 
 const EventoManager = {
   createEvento: async (evento, host) => {
     const myhost = await HostManager.getHostById(host);
     evento.subhosts = [myhost.cpf_cnpj];
-    const pct = await EventoValidations.verificarSaldoPurpleCoinsHostPacote(
+    const pct = await EventoActions.verificarSaldoPurpleCoinsHostPacote(
       myhost,
       evento
     );
-    await EventoValidations.startCreateEventoValidations(evento, host)
+    await EventoActions.startCreateEventoAction(evento, host);
     const totalIngressos = evento.tipos_ingressos.reduce(
       (total, tipo) => total + tipo.quantidade,
       0
     );
-    const msgPurpleCoins = await HostManager.usarPurpleCoins(myhost, pct, totalIngressos);
+    const msgPurpleCoins = await HostManager.usarPurpleCoins(
+      myhost,
+      pct,
+      totalIngressos
+    );
     const eventoObject = {
       ...evento,
+      status: StatusEnum.EM_ANDAMENTO,
       host: host.id,
       qtd_ingressos: totalIngressos,
     };
@@ -123,9 +143,24 @@ const EventoManager = {
         id: myhost._id,
         purpleCoins: myhost.purpleCoins,
         subCoins: myhost.subCoins,
-      }
+      },
     };
     return eventoResponse;
+  },
+  getEventoByHost: async (host, evento) => {
+    const query = { host: host };
+
+    if (evento.titulo) {
+      query.titulo = { $regex: evento.titulo, $options: "i" }; // 'i' para case insensitive
+    }
+
+    if (evento.status) {
+      query.status = StatusEnum.EM_ANDAMENTO;
+    }
+
+    const eventos = await EventoModel.find(query).populate("host");
+
+    return EventoActions.montarResponseEventos(eventos);
   },
 };
 
