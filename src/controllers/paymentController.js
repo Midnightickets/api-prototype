@@ -33,7 +33,15 @@ const MPpaymentController = {
     } catch (error) {
       return res.status(400).json(error);
     }
-  }
+  },
+  notification_listener: async (req, res) => {
+    try {
+      console.log(JSON.stringify(req))
+      return res.status(200);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  },
 };
 
 module.exports = MPpaymentController;
