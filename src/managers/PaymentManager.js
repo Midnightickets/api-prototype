@@ -27,6 +27,7 @@ const PaymentManager = {
   brickPayment: async (reqBody) => {
     try {
       const idempotencyKey = generateIdempotencyKey();
+      reqBody.notification_url = process.env.NOTIFICATION_URL;
       console.log(reqBody)
       const response = await payment.create({ body: reqBody, idempotencyKey });
       return response;
