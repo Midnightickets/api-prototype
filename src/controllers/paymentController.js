@@ -42,7 +42,7 @@ const MPpaymentController = {
       await listener.save();
       if(req.body.action == 'payment.updated'){
         const pagamento = await PaymentManager.buscarPagamento(req.body.data.id)
-        const recargaPayment = RecargaPaymentModel.findOne({payment_id: req.body.data.id})
+        const recargaPayment = await RecargaPaymentModel.findOne({payment_id: req.body.data.id})
         if(pagamento &&  recargaPayment && pagamento.status === 'approved'){
           const host = await HostManager.buscarHostIdSimples(recargaPayment.host)
           host.subCoins += 999
