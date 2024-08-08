@@ -9,6 +9,7 @@ router.route('/create_preference')
 
 router.route('/get_pagamento')
     .get((req, res) => paymentController.buscar_pagamento(req, res));
-
+router.route('/save_recarga_payment')
+    .post((req, res) => paymentController.save_recarga_payment(req, res));
 
 module.exports = router

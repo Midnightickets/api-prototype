@@ -100,6 +100,7 @@ const HostManager = {
                 const hostResponse = {
                     id: host._id,
                     login: host.login,
+                    email: host.email,
                     nome_razao: host.nome_razao,
                     saldo: host.saldo,
                     purpleCoins: host.purpleCoins,

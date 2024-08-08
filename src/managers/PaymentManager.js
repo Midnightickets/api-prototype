@@ -2,6 +2,8 @@ require("dotenv").config();
 const { MercadoPagoConfig, Preference } = require("mercadopago");
 const mercadopago = require("mercadopago");
 const { v4: uuidv4 } = require("uuid");
+const { RecargaPayment: RecargaPaymentModel } = require("../models/RecargaPayment");
+
 const client = new MercadoPagoConfig({
   accessToken: process.env.PROD_ACCESS_TOKEN,
   // accessToken: process.env.MP_ACCESS_TOKEN,
@@ -35,9 +37,18 @@ const PaymentManager = {
     const mypreference = {
       items: items,
       purpose: purpose
-    };
+    }
     try {
       const response = await preference.create({ body: mypreference });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  },
+  saveRecargaPayment: async (recargaPayment) => {
+    try {
+      const newRecargaPayment = new RecargaPaymentModel(recargaPayment);
+      const response = await newRecargaPayment.save();
       return response;
     } catch (error) {
       throw error;
@@ -45,4 +56,5 @@ const PaymentManager = {
   }
 };
 
-module.exports = PaymentManager;
+module.exports = PaymentManager
+

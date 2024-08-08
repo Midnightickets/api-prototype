@@ -26,6 +26,14 @@ const MPpaymentController = {
       return res.status(500).json({ error: error.message });
     }
   },
+  save_recarga_payment: async (req, res) => {
+    try {
+      const response = await PaymentManager.saveRecargaPayment(req.body);
+      return res.status(201).json(response);
+    } catch (error) {
+      return res.status(400).json(error);
+    }
+  }
 };
 
 module.exports = MPpaymentController;
