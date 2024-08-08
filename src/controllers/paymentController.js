@@ -1,6 +1,7 @@
 const PaymentManager = require("../managers/PaymentManager");
 const HostManager = require("../managers/HostManager");
 const { Listener: ListenerModel } = require("../models/Listener");
+const { RecargaPayment: RecargaPaymentModel } = require("../models/RecargaPayment");
 const MPpaymentController = {
   buscar_pagamento: async (req, res) => {
     try {
@@ -39,16 +40,16 @@ const MPpaymentController = {
     try {
       const listener = new ListenerModel({ specs: req.body });
       await listener.save();
-      // if(req.body.action == 'payment.updatedfromwebhook'){
-      //   const pagamento = PaymentManager.buscarPagamento(req.body.data.id)
-      //   if(pagamento && pagamento.status != 'pending'){
-      //     const host = await HostManager.buscarHostIdSimples(pagamento.host)
-      //     host.subCoins += 1000
-      //     await host.save()
-      //     console.log('Pagamento confirmado, subcoins recebidas')
-      //   }
-      // }
-      console.log(req.body)
+      if(req.body.action == 'payment.updated'){
+        const pagamento = await PaymentManager.buscarPagamento(req.body.data.id)
+        const recargaPayment = RecargaPaymentModel.findOne({payment_id: req.body.data.id})
+        if(pagamento &&  recargaPayment && pagamento.status === 'approved'){
+          const host = await HostManager.buscarHostIdSimples(recargaPayment.host)
+          host.subCoins += 999
+          await host.save()
+          console.log('Pagamento confirmado, subcoins recebidas')
+        }
+      }
       res.status(201).json()
     } catch (error) {
       res.status(400).json(error);
