@@ -6,5 +6,7 @@ router.route('/create_host')
 
 router.route('/login_host')
     .post((req, res) => hostController.login_host(req, res));
-    
+
+router.route('/update_moneys')
+    .post((req, res) => hostController.update_moneys(req, res));
 module.exports = router

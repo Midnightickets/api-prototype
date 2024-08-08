@@ -69,6 +69,22 @@ const HostManager = {
         }
         return host;
     },
+    getUpdatedMoneys: async (id) => {
+        const hostObject = await HostModel.findOne({ _id: id });
+        if (!hostObject) {
+            throw new Error(ErrorEnum.HOST_NOT_FOUND);
+        }
+        const resHost = {
+            id: hostObject._id,
+            login: hostObject.login,
+            email: hostObject.email,
+            saldo: hostObject.saldo,
+            purpleCoins: hostObject.purpleCoins,
+            subCoins: hostObject.subCoins,
+        }
+        return resHost;
+    }
+    ,
     getHostById: async (host) => {
         if(!host.id || !host.senha) {
             throw new Error(ErrorEnum.REQUIRED_FIELDS);

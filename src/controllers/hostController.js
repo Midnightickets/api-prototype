@@ -19,6 +19,15 @@ const hostController = {
                 res.status(400).json({ error: error.message });
             });
     },
+    update_moneys: async (req, res) => {
+        await HostManager.getUpdatedMoneys(req.body.id)
+            .then((host) =>{
+                res.status(200).json(host);
+            })
+            .catch((error) => {
+                res.status(400).json({ error: error.message });
+            });
+    },
 }
 
 module.exports = hostController;
