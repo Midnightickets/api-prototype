@@ -18,7 +18,7 @@ const recargaPaymentSchema = new Schema({
         required: true,
     },
 },
-    { timestamps: false }
+    { timestamps: true }
 )
 
 recargaPaymentSchema.index({ payment_id: 1 }, { unique: true });

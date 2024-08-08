@@ -62,6 +62,13 @@ const HostManager = {
             throw new Error(error);
         }
     },
+    buscarHostIdSimples: async (id) => {
+        const host = await HostModel.findOne({ _id: id });
+        if (!host) {
+            throw new Error(ErrorEnum.HOST_NOT_FOUND);
+        }
+        return host;
+    },
     getHostById: async (host) => {
         if(!host.id || !host.senha) {
             throw new Error(ErrorEnum.REQUIRED_FIELDS);
