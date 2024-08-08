@@ -36,10 +36,10 @@ const MPpaymentController = {
   },
   notification_listener: async (req, res) => {
     try {
-      console.log(JSON.stringify(req))
-      return res.status(200);
+      console.log(req.body)
+      res.status(201).json()
     } catch (error) {
-      return res.status(400).json(error);
+      res.status(400).json(error);
     }
   },
 };
