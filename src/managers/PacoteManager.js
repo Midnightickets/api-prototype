@@ -26,21 +26,19 @@ const EventoOptionsManager = {
     getCoinsValores: async () => {
         return CoinsValores;
     },
-    getEventoPacoteByValue: async (pacote) => {
-        const pct = EventoPacotes.find(pacote => pacote.value === pacote.value);
-        if (!pct || pct.label !== pacote.label || pct.purpleCoins !== pacote.purpleCoins || pct.max_ingressos !== pacote.max_ingressos) {
+    getEventoPacoteByValue: async (pacoteReq) => {
+        const pct = EventoPacotes.find(pacote => pacoteReq.value === pacote.value);
+        if (!pct || pct.purpleCoins != pacoteReq.purpleCoins || pct.max_ingressos != pacoteReq.max_ingressos) {
             throw new Error(ErrorEnum.INVALID_PACOTE_EVENTO);
         }
         return pct;
     },
     getCoinsValorByValue: async (pacote) => {
         const cv = CoinsValores.find(coin => coin.value === pacote.value);
-    
         // Verifica se o objeto encontrado é igual ao pacote comparando todas as propriedades
-        if (!cv || cv.label !== pacote.label || cv.preco !== pacote.preco || cv.valorAvista !== pacote.valorAvista || cv.tipo !== pacote.tipo) {
+        if (!cv || cv.preco !== pacote.preco || cv.valorAvista !== pacote.valorAvista || cv.tipo !== pacote.tipo) {
             throw new Error(ErrorEnum.INVALID_COIN);
         }
-    
         return cv;
     }
 }
