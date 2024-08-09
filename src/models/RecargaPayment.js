@@ -19,6 +19,7 @@ const recargaPaymentSchema = new Schema({
     },
     status: {
         type: String,
+        required: true,
     },
     pacote:{
         type: Object,
