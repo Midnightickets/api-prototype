@@ -17,6 +17,13 @@ const recargaPaymentSchema = new Schema({
         ref: 'Host',
         required: true,
     },
+    status: {
+        type: String,
+    },
+    pacote:{
+        type: Object,
+        required: true,
+    },
 },
     { timestamps: true }
 )

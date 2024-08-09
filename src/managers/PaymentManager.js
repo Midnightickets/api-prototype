@@ -28,8 +28,10 @@ const PaymentManager = {
     try {
       const idempotencyKey = generateIdempotencyKey();
       reqBody.notification_url = process.env.NOTIFICATION_URL;
-      // console.log(reqBody)
-      const response = await payment.create({ body: reqBody, idempotencyKey });
+      console.log(reqBody)
+      const response = await payment.create({ body: reqBody , requestOptions:{
+        idempotencyKey: idempotencyKey
+      }});
       return response;
     } catch (error) {
       throw error;

@@ -1,7 +1,9 @@
 const PaymentManager = require("../managers/PaymentManager");
 const HostManager = require("../managers/HostManager");
+const PacoteManager = require("../managers/PacoteManager");
 const { Listener: ListenerModel } = require("../models/Listener");
 const { RecargaPayment: RecargaPaymentModel } = require("../models/RecargaPayment");
+const MercadoPagoEnums = require("../enums/MercadoPagoEnums");
 const MPpaymentController = {
   buscar_pagamento: async (req, res) => {
     try {
@@ -30,28 +32,39 @@ const MPpaymentController = {
   },
   save_recarga_payment: async (req, res) => {
     try {
-      const response = await PaymentManager.saveRecargaPayment(req.body);
-      return res.status(201).json(response);
+      const pacote = await PacoteManager.getCoinsValorByValue(req.body.pacote);
+      if(pacote){
+        const response = await PaymentManager.saveRecargaPayment(req.body);
+        return res.status(201).json(response);
+      }
     } catch (error) {
       return res.status(400).json(error);
     }
   },
-  notification_listener: async (req, res) => {
+  host_notification_listener: async (req, res) => {
     try {
       const listener = new ListenerModel({ specs: req.body });
       await listener.save();
-      if(req.body.action == 'payment.updated'){
+      if(req.body.action === MercadoPagoEnums.LISTENER_UPDATED){
         const pagamento = await PaymentManager.buscarPagamento(req.body.data.id)
         const recargaPayment = await RecargaPaymentModel.findOne({payment_id: req.body.data.id})
-        if(pagamento &&  recargaPayment && pagamento.status === 'approved'){
+        if(pagamento.status === MercadoPagoEnums.PAYMENT_STATUS_APPROVED){
           const host = await HostManager.buscarHostIdSimples(recargaPayment.host)
-          host.subCoins += 10
+          host.purpleCoins += recargaPayment.pacote.purpleCoinsCredito
+          host.subCoins += recargaPayment.pacote.subCoinsCredito
           await host.save()
-          console.log('Pagamento confirmado, subcoins recebidas')
+          .then(() => {
+            console.log('Host atualizado')
+          })
         }
+        recargaPayment.status = pagamento.status
+        await recargaPayment.save().then(() => {
+          console.log('Status do pagamento atualizado')
+        })
       }
       res.status(201).json()
     } catch (error) {
+      console.log(error)
       res.status(400).json(error);
     }
   },

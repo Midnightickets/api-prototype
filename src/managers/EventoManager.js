@@ -87,7 +87,7 @@ const EventoActions = {
     }
   },
   verificarSaldoPurpleCoinsHostPacote: async (host, evento) => {
-    const pct = await PacoteManager.getEventoPacoteByValue(evento.pacote.value);
+    const pct = await PacoteManager.getEventoPacoteByValue(evento.pacote);
     if (host.purpleCoins < pct.purpleCoins) {
       throw new Error(ErrorEnum.PURPLECOINS_INSUFICIENTE);
     }
