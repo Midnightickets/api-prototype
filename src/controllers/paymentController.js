@@ -45,7 +45,7 @@ const MPpaymentController = {
         const recargaPayment = await RecargaPaymentModel.findOne({payment_id: req.body.data.id})
         if(pagamento &&  recargaPayment && pagamento.status === 'approved'){
           const host = await HostManager.buscarHostIdSimples(recargaPayment.host)
-          host.subCoins += 999
+          host.subCoins += 10
           await host.save()
           console.log('Pagamento confirmado, subcoins recebidas')
         }

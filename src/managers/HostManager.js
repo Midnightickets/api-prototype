@@ -78,6 +78,7 @@ const HostManager = {
             id: hostObject._id,
             login: hostObject.login,
             email: hostObject.email,
+            nome_razao: hostObject.nome_razao,
             saldo: hostObject.saldo,
             purpleCoins: hostObject.purpleCoins,
             subCoins: hostObject.subCoins,
