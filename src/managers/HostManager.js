@@ -79,6 +79,8 @@ const HostManager = {
             login: hostObject.login,
             email: hostObject.email,
             nome_razao: hostObject.nome_razao,
+            cpf_cnpj: hostObject.cpf_cnpj,
+            telefone: hostObject.telefone,
             saldo: hostObject.saldo,
             purpleCoins: hostObject.purpleCoins,
             subCoins: hostObject.subCoins,
@@ -127,6 +129,8 @@ const HostManager = {
                     email: host.email,
                     nome_razao: host.nome_razao,
                     saldo: host.saldo,
+                    telefone: host.telefone,
+                    cpf_cnpj: host.cpf_cnpj,
                     purpleCoins: host.purpleCoins,
                     subCoins: host.subCoins,
                 }

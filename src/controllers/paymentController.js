@@ -44,6 +44,7 @@ const MPpaymentController = {
     }
   },
   host_notification_listener: async (req, res) => {
+    console.log("🔔 Notificação Atualização Pagamento Mercado Pago 💷\n" + JSON.stringify(req.body));
     try {
       const listener = new ListenerModel({ specs: req.body });
       await listener.save();
