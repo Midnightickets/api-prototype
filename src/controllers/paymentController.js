@@ -63,8 +63,8 @@ const MPpaymentController = {
             recargaPayment.pacote
           );
           if (pct) {
-            host.purpleCoins += pct.pacote.purpleCoinsCredito;
-            host.subCoins += pct.pacote.subCoinsCredito;
+            host.purpleCoins += pct.purpleCoinsCredito;
+            host.subCoins += pct.subCoinsCredito;
             await host.save().then(() => {
               console.log("Compra Bem Sucedida, Saldos do Host Atualizado");
             });
