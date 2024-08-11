@@ -142,8 +142,7 @@ const HostManager = {
     await host.save();
     const msg =
       pct.purpleCoins.toString() +
-      " PurpleCoins utilizados com sucesso Saldo atual: " +
-      host.purpleCoins.toString();
+      " PurpleCoins utilizados"
     return msg;
   },
   loginHost: async (hostReq) => {

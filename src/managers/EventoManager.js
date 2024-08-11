@@ -43,8 +43,8 @@ const EventoActions = {
     if (!Array.isArray(subhosts)) {
       throw new Error(ErrorEnum.INVALID_SUBHOSTS);
     }
-    for (const cpf of subhosts) {
-      await Utils.validaCPF(cpf);
+    for (const subhost of subhosts) {
+      await Utils.validaCPF(subhost.id);
     }
   },
   validaQtdIngressos: async (evento) => {
@@ -114,7 +114,7 @@ const EventoActions = {
 const EventoManager = {
   createEvento: async (evento, host) => {
     const myhost = await HostManager.getHostById(host);
-    evento.subhosts = [myhost.cpf_cnpj];
+    evento.subhosts = [{id: myhost.cpf_cnpj, nome: myhost.nome_razao}];
     const pct = await EventoActions.verificarSaldoPurpleCoinsHostPacote(
       myhost,
       evento
@@ -165,8 +165,8 @@ const EventoManager = {
   },
   getEventoByHost: async (host, evento) => {
     const hostValido = await HostManager.getHostByIdCript(host)
-    console.log(hostValido);
-    const eventoObject = await EventoModel.findById(evento.id).populate("host");
+    // console.log(hostValido);
+    const eventoObject = await EventoModel.findById(evento.id);
     if (!eventoObject) {
       throw new Error(ErrorEnum.EVENTO_NOT_FOUND);
     }

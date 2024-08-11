@@ -6,11 +6,11 @@ const eventoSchema = new Schema({
     titulo: {
         type: String,
         required: true,
-        maxlength: 50
+        maxlength: 80
     },
     descricao: {
         type: String,
-        maxlength: 400,
+        maxlength: 800,
     },
     endereco: {
         type: String,
@@ -43,7 +43,7 @@ const eventoSchema = new Schema({
     },
     subhosts: {
         // arrays de cpfs das pessoas que poderam validar ingressos no evento
-        type: [String],
+        type: [Object],
         required: true,  
     },
     qtd_ingressos: {
