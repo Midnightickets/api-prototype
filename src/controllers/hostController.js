@@ -20,7 +20,7 @@ const hostController = {
             });
     },
     update_moneys: async (req, res) => {
-        await HostManager.getUpdatedMoneys(req.body.id)
+        await HostManager.getUpdatedMoneys(req.body)
             .then((host) =>{
                 res.status(200).json(host);
             })

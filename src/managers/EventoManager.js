@@ -3,6 +3,7 @@ const { Evento: EventoModel } = require("../models/Evento");
 const HostManager = require("./HostManager");
 const PacoteManager = require("./PacoteManager");
 const Utils = require("../utils");
+const bcrypt = require("bcrypt");
 
 const EventoActions = {
   startCreateEventoAction: async (evento, host) => {
@@ -147,7 +148,7 @@ const EventoManager = {
     };
     return eventoResponse;
   },
-  getEventoByHost: async (host, evento) => {
+  getEventosByHost: async (host, evento) => {
     const query = { host: host };
 
     if (evento.titulo) {
@@ -162,6 +163,15 @@ const EventoManager = {
 
     return EventoActions.montarResponseEventos(eventos);
   },
-};
+  getEventoByHost: async (host, evento) => {
+    const hostValido = await HostManager.getHostByIdCript(host)
+    console.log(hostValido);
+    const eventoObject = await EventoModel.findById(evento.id).populate("host");
+    if (!eventoObject) {
+      throw new Error(ErrorEnum.EVENTO_NOT_FOUND);
+    }
+    return eventoObject;
+  },
+}
 
 module.exports = EventoManager;

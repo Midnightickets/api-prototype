@@ -77,7 +77,7 @@ const MPpaymentController = {
       }
       res.status(201).json();
     } catch (error) {
-      console.log(error);
+      console.log("Erro notificatio Listener:\n" + error);
       res.status(400).json(error);
     }
   },

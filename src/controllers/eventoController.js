@@ -13,7 +13,7 @@ const eventoController = {
         });
     },
     buscar_eventos: async (req, res) => {
-        await EventoManager.getEventoByHost(req.body.host, req.body.evento)
+        await EventoManager.getEventosByHost(req.body.host, req.body.evento)
         .then((eventos) => {
             res.status(200).json(eventos);
         })
@@ -22,6 +22,16 @@ const eventoController = {
             res.status(400).json({ error: err.message });
         });
     },
+    buscar_evento_host: async (req, res) => {
+        await EventoManager.getEventoByHost(req.body.host, req.body.evento)
+        .then((evento) => {
+            res.status(200).json(evento);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ error: err.message });
+        });
+    }
 }
 
 module.exports = eventoController;
