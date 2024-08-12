@@ -104,7 +104,7 @@ const HostManager = {
   },
   getHostById: async (host) => {
     if (!host.id || !host.senha) {
-      throw new Error(ErrorEnum.REQUIRED_FIELDS);
+      throw new Error(ErrorEnum.HOST_NOT_FOUND);
     }
     const hostObject = await HostModel.findOne({ _id: host.id });
     if (!hostObject) {
@@ -119,7 +119,7 @@ const HostManager = {
   },
   getHostByIdCript: async (host) => {
     if (!host.id || !host.senha) {
-      throw new Error(ErrorEnum.REQUIRED_FIELDS);
+      throw new Error(ErrorEnum.HOST_NOT_FOUND);
     }
     const hostObject = await HostModel.findOne({ _id: host.id });
     if (!hostObject) {

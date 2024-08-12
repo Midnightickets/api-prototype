@@ -1,9 +1,10 @@
-const { ErrorEnum, StatusEnum } = require("../enums/Enums");
+const { ErrorEnum, StatusEnum, SuccessEnum } = require("../enums/Enums");
 const { Evento: EventoModel } = require("../models/Evento");
 const HostManager = require("./HostManager");
 const PacoteManager = require("./PacoteManager");
 const Utils = require("../utils");
 const bcrypt = require("bcrypt");
+const e = require("express");
 
 const EventoActions = {
   startCreateEventoAction: async (evento, host) => {
@@ -170,6 +171,24 @@ const EventoManager = {
     }
     return eventoObject;
   },
+  atualizarEvento: async (evento, host) => {
+    const myhost = await HostManager.getHostByIdCript(host);
+    evento.id = evento._id;
+    const eventoObject = await EventoManager.getEventoByHost(myhost, evento);
+    await EventoActions.validaTituloEventoHost(evento, myhost);
+    eventoObject.titulo = evento.titulo;
+    eventoObject.img_url = evento.img_url;
+    eventoObject.descricao = evento.descricao;
+    eventoObject.contato = evento.contato;
+    eventoObject.data_evento = evento.data_evento;
+    eventoObject.hora_evento = evento.hora_evento;
+    eventoObject.hora_final = evento.hora_final;
+    eventoObject.endereco = evento.endereco;
+    await eventoObject.save().catch((err) => {
+      throw new Error(ErrorEnum.REQUIRED_FIELDS);
+    })
+    return SuccessEnum.EVENTO_ATUALIZADO;
+  }
 }
 
 module.exports = EventoManager;

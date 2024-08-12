@@ -4,6 +4,7 @@ const SuccessEnum = {
     // EVENTO
     CREATE_EVENTO: 'Evento criado com sucesso',
     CREATE_HOST: 'Host criado com sucesso',
+    EVENTO_ATUALIZADO: 'Evento atualizado com sucesso',
 }
 
 const ErrorEnum = {
@@ -13,7 +14,7 @@ const ErrorEnum = {
     LOGIN_ERROR: 'Erro no login',
     REQUIRED_FIELDS: 'Campos obrigatórios não preenchidos',
     // EVENTO
-    EVENTO_TITULO_EXISTENTE: 'Já existe um evento com esse título para esse host',
+    EVENTO_TITULO_EXISTENTE: 'Você já possui um Evento com esse título',
     INVALID_SUBHOSTS: 'Subhosts inválidos',
     INVALID_TIPOS_INGRESSOS: 'Tipos de ingressos inválidos',
     INVALID_QTD_INGRESSOS: 'Quantidade de ingressos inválida',
