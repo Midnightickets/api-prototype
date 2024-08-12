@@ -23,9 +23,7 @@ const EventoActions = {
       !evento.data_evento ||
       !evento.pacote ||
       !evento.subhosts ||
-      !evento.tipos_ingressos ||
-      !evento.img_url
-    ) {
+      !evento.tipos_ingressos) {
       // console.log(evento);
       throw new Error(ErrorEnum.REQUIRED_FIELDS);
     }

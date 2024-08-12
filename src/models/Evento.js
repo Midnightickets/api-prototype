@@ -15,7 +15,7 @@ const eventoSchema = new Schema({
     endereco: {
         type: String,
         required: true,
-        maxlength: 100,
+        maxlength: 200,
     },
     contato: {
         type: String,
@@ -55,8 +55,7 @@ const eventoSchema = new Schema({
         required: true,
     },
     img_url: {
-        type: String,
-        required: true,
+        type: String, 
     },
     host: {
         type: Schema.Types.ObjectId,
