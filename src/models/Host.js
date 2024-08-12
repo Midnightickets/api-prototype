@@ -19,6 +19,9 @@ const hostSchema = new Schema({
         maxlength: 80,
         required: true,
     },
+    img:{
+        type: String,
+    },
     login:{
         type: String,
         required: true,

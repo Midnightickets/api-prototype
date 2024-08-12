@@ -90,6 +90,7 @@ const HostManager = {
     }
     const resHost = {
       id: hostObject._id,
+      img: hostObject.img,
       login: hostObject.login,
       senha: hostObject.senha,
       email: hostObject.email,
@@ -158,6 +159,7 @@ const HostManager = {
         login: host.login,
         email: host.email,
         senha: host.senha,
+        img: host.img,
         nome_razao: host.nome_razao,
         saldo: host.saldo,
         telefone: host.telefone,
