@@ -41,6 +41,9 @@ const eventoSchema = new Schema({
         type: Object,
         required: true,
     },
+    pacotesAdicionais: {
+        type: [Object],
+    },
     subhosts: {
         // arrays de cpfs das pessoas que poderam validar ingressos no evento
         type: [Object],
