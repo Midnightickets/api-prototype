@@ -4,7 +4,7 @@ const SuccessEnum = {
     // EVENTO
     CREATE_EVENTO: 'Evento criado com sucesso',
     CREATE_HOST: 'Host criado com sucesso',
-    EVENTO_ATUALIZADO: 'Evento atualizado com sucesso',
+    UPDATED_EVENTO: 'Evento atualizado com sucesso',
 }
 
 const ErrorEnum = {
@@ -20,6 +20,7 @@ const ErrorEnum = {
     INVALID_QTD_INGRESSOS: 'Quantidade de ingressos inválida',
     INVALID_LOCALIZACAO: 'Localização inválida',
     EVENTO_NOT_FOUND: 'Evento não encontrado',
+    UPDATE_EVENTO: 'Campos Obrigatórios não preenchidos ou Título já Existente em outro Evento seu',
     // HOST
     HOST_NOT_FOUND: 'Host não encontrado',
     CPF_CNPJ_EXISTENTE: 'Já existe um host com esse CPF/CNPJ',
@@ -33,7 +34,7 @@ const ErrorEnum = {
     // PACOTE
     INVALID_PACOTE_EVENTO: 'Pacote de ingressos inválido',
     INVALID_COIN: 'Moeda virtual inválida',
-    PURPLECOINS_INSUFICIENTE: 'Saldo de PurpleCoins insuficiente'
+    PURPLECOINS_INSUFICIENTE: 'Saldo de PurpleCoins insuficiente',
 }
 
 const StatusEnum = {

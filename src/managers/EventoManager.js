@@ -22,6 +22,7 @@ const EventoActions = {
       !evento.endereco ||
       !evento.contato ||
       !evento.data_evento ||
+      !evento.hora_evento ||
       !evento.pacote ||
       !evento.subhosts ||
       !evento.tipos_ingressos) {
@@ -175,7 +176,9 @@ const EventoManager = {
     const myhost = await HostManager.getHostByIdCript(host);
     evento.id = evento._id;
     const eventoObject = await EventoManager.getEventoByHost(myhost, evento);
-    await EventoActions.validaTituloEventoHost(evento, myhost);
+    if(eventoObject.titulo !== evento.titulo){
+      await EventoActions.validaTituloEventoHost(evento, myhost);
+    }
     eventoObject.titulo = evento.titulo;
     eventoObject.img_url = evento.img_url;
     eventoObject.descricao = evento.descricao;
@@ -184,11 +187,12 @@ const EventoManager = {
     eventoObject.hora_evento = evento.hora_evento;
     eventoObject.hora_final = evento.hora_final;
     eventoObject.endereco = evento.endereco;
-    await eventoObject.save().catch((err) => {
-      throw new Error(ErrorEnum.REQUIRED_FIELDS);
+    await eventoObject.save()
+    .catch((err) => {
+        throw new Error(ErrorEnum.REQUIRED_FIELDS);
     })
-    return SuccessEnum.EVENTO_ATUALIZADO;
-  }
+    return SuccessEnum.UPDATED_EVENTO;
+  },
 }
 
 module.exports = EventoManager;
