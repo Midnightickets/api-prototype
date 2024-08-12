@@ -55,10 +55,6 @@ const hostSchema = new Schema({
         type: [Object],
         required: true,
     },
-    logado:{
-        type: Boolean, 
-        required: true,
-    },
     },
     { timestamps: true }
 

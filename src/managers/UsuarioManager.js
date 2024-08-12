@@ -27,7 +27,6 @@ const UsuarioManager = {
     login: async (user) => {
         const usuario = await UsuarioModel.findOne({login: user.login});
         if (usuario && (await bcrypt.compare(user.senha, usuario.senha))) {
-            usuario.logado = true;
             usuario.save();
             return usuario;
         } else {
@@ -36,7 +35,6 @@ const UsuarioManager = {
     },
     logout: async (user) => {
         const usuario = await UsuarioModel.findOne({login: user.login, senha: user.senha});
-        usuario.logado = false;
         usuario.save();
         return true
     },

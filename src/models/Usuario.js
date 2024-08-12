@@ -34,10 +34,6 @@ const usuarioSchema = new Schema({
         unique: true,
         maxlength: 60,
     }, 
-    logado:{
-        type: Boolean,
-        required: true,
-    },
     },
     { timestamps: true }
 

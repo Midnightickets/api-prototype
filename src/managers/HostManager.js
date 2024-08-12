@@ -54,7 +54,6 @@ const HostInicialization = {
     host.saldo = 0;
     host.purpleCoins = 0;
     host.subCoins = 0;
-    host.logado = true;
   },
   criptografarSenha: async (host) => {
     const salt = await bcrypt.genSalt(10);
@@ -152,7 +151,6 @@ const HostManager = {
     }
     const host = await HostModel.findOne({ login: hostReq.login });
     if (host && (await bcrypt.compare(hostReq.senha, host.senha))) {
-      host.logado = true;
       await host.save();
       const hostResponse = {
         id: host._id,
