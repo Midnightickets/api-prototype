@@ -38,8 +38,20 @@ const PaymentManager = {
   },
   createPreference: async (reqBody) => {
     try {
-      const response = await preference.create({ body: reqBody });
-      console.log('preference', response)
+      const recargaPayment = {
+        preference_id: '',
+        host: reqBody.host,
+        status: 'preference.created',
+        pacote: reqBody.pacote,
+      };
+      const recargaPaymentCreated = await PaymentManager.saveRecargaPayment(recargaPayment);
+      reqBody.items[0].description = recargaPaymentCreated._id;
+      const response = await preference.create({ body: reqBody })
+      .catch((error) => { console.log(error) })
+      
+      recargaPaymentCreated.preference_id = response.id;
+      await recargaPaymentCreated.save().then(() => { console.log('Recarga Payment Atualizado') });
+
       return response;
     } catch (error) {
       throw error;

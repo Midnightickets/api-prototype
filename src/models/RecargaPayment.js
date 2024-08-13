@@ -5,14 +5,9 @@ const { Schema } = mongoose
 const recargaPaymentSchema = new Schema({
     payment_id: {
         type: String,
-        unique: true,
     },
     preference_id: {
         type: String,
-    },
-    specs: {
-        type: Object,
-        required: true,
     },
     host: {
         type: Schema.Types.ObjectId,
@@ -31,7 +26,6 @@ const recargaPaymentSchema = new Schema({
     { timestamps: true }
 )
 
-recargaPaymentSchema.index({ payment_id: 1 }, { unique: true });
 const RecargaPayment = mongoose.model('RecargaPayment', recargaPaymentSchema)
 
 RecargaPayment.createIndexes();

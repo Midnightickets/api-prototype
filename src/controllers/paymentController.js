@@ -1,7 +1,6 @@
 const PaymentManager = require("../managers/PaymentManager");
 const HostManager = require("../managers/HostManager");
 const PacoteManager = require("../managers/PacoteManager");
-const { Listener: ListenerModel } = require("../models/Listener");
 const {
   RecargaPayment: RecargaPaymentModel,
 } = require("../models/RecargaPayment");
@@ -45,22 +44,28 @@ const MPpaymentController = {
   host_notification_listener: async (req, res) => {
     console.log("🔔 Notificação Atualização Pagamento Mercado Pago 💷\n\n");
     try {
-     console.log("🔔 MERCADP PAGO DIZ: 💷\n" + JSON.stringify(req.body));
+      console.log("🔔 MERCADO PAGO DIZ: 💷\n" + JSON.stringify(req.body));
+
       if (req.body.action === MercadoPagoEnums.LISTENER_UPDATED) {
         const pagamento = await PaymentManager.buscarPagamento(
           req.body.data.id
         );
-        recargaPayment.status = pagamento.status;
-        recargaPayment.save();
         const recargaPayment = await RecargaPaymentModel.findOne({
-          payment_id: req.body.data.id,
-        }).then(() => {
-          console.log("Pagamento Encontrado");
-        });
+          _id: pagamento.items[0].description,
+        })
+          .then(() => {
+            console.log("Pagamento Encontrado");
+          })
+          .catch((error) => {
+            console.log(JSON.stringify(error));
+            throw error;
+          });
+        recargaPayment.status = pagamento.status;
+        await recargaPayment.save();
         if (pagamento.status === MercadoPagoEnums.PAYMENT_STATUS_APPROVED) {
           const host = await HostManager.buscarHostIdSimples(
             recargaPayment.host
-          ).then(()=>console.log("👨🏼‍💻Host Encontrado"))
+          ).then(() => console.log("👨🏼‍💻Host Encontrado")).catch(err => console.log(JSON.stringify(err)))
           const pct = await PacoteManager.getCoinsValorByValue(
             recargaPayment.pacote
           );
@@ -71,7 +76,8 @@ const MPpaymentController = {
               console.log("Compra Bem Sucedida, Saldos do Host Atualizado");
             });
           }
-        } else if(pagamento.status === MercadoPagoEnums.PAYMENT_STATUS_REJECTED){
+        } else {
+          recargaPayment.status = MercadoPagoEnums.PAYMENT_STATUS_REJECTED;
           console.log("Pagamento Rejeitado");
         }
         await recargaPayment.save().then(() => {
@@ -80,7 +86,7 @@ const MPpaymentController = {
       }
       res.status(201).json();
     } catch (error) {
-      console.log("Erro notificatio Listener:\n" + error);
+      console.log("Erro notificatio Listener:\n" + JSON.stringify(error));
       res.status(400).json(error);
     }
   },
