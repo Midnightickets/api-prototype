@@ -44,21 +44,25 @@ const MPpaymentController = {
     }
   },
   host_notification_listener: async (req, res) => {
-    console.log("🔔 Notificação Atualização Pagamento Mercado Pago 💷\n" + JSON.stringify(req.body));
+    console.log("🔔 Notificação Atualização Pagamento Mercado Pago 💷\n\n");
     try {
       const listener = new ListenerModel({ specs: req.body });
-      await listener.save();
+    //  console.log("🔔 Listener: 💷\n" + JSON.stringify(listener));
       if (req.body.action === MercadoPagoEnums.LISTENER_UPDATED) {
         const pagamento = await PaymentManager.buscarPagamento(
           req.body.data.id
         );
+        recargaPayment.status = pagamento.status;
+        recargaPayment.save();
         const recargaPayment = await RecargaPaymentModel.findOne({
           payment_id: req.body.data.id,
+        }).then(() => {
+          console.log("Pagamento Encontrado");
         });
         if (pagamento.status === MercadoPagoEnums.PAYMENT_STATUS_APPROVED) {
           const host = await HostManager.buscarHostIdSimples(
             recargaPayment.host
-          );
+          ).then(()=>console.log("👨🏼‍💻Host Encontrado"))
           const pct = await PacoteManager.getCoinsValorByValue(
             recargaPayment.pacote
           );
@@ -69,8 +73,9 @@ const MPpaymentController = {
               console.log("Compra Bem Sucedida, Saldos do Host Atualizado");
             });
           }
+        } else if(pagamento.status === MercadoPagoEnums.PAYMENT_STATUS_REJECTED){
+          console.log("Pagamento Rejeitado");
         }
-        recargaPayment.status = pagamento.status;
         await recargaPayment.save().then(() => {
           console.log("Status do pagamento atualizado");
         });
