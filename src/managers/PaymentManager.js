@@ -5,8 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 const { RecargaPayment: RecargaPaymentModel } = require("../models/RecargaPayment");
 
 const client = new MercadoPagoConfig({
-  accessToken: process.env.PROD === 'false' ? process.env.TESTE_ACCESS_TOKEN : process.env.PROD_ACCESS_TOKEN,
-  // accessToken: process.env.MP_ACCESS_TOKEN,
+  accessToken: process.env.PROD_ACCESS_TOKEN,
 });
 const preference = new Preference(client);
 const payment = new mercadopago.Payment(client);
@@ -34,16 +33,13 @@ const PaymentManager = {
       }});
       return response;
     } catch (error) {
-      throw error;
+      throw new Error(error);
     }
   },
-  createPreference: async (items, purpose) => {
-    const mypreference = {
-      items: items,
-      purpose: purpose
-    }
+  createPreference: async (reqBody) => {
     try {
-      const response = await preference.create({ body: mypreference });
+      const response = await preference.create({ body: reqBody });
+      console.log('preference', response)
       return response;
     } catch (error) {
       throw error;

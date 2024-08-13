@@ -5,8 +5,10 @@ const { Schema } = mongoose
 const recargaPaymentSchema = new Schema({
     payment_id: {
         type: String,
-        required: true,
         unique: true,
+    },
+    preference_id: {
+        type: String,
     },
     specs: {
         type: Object,

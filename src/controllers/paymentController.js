@@ -24,9 +24,8 @@ const MPpaymentController = {
     }
   },
   criar_preference: async (req, res) => {
-    const { items, purpose } = req.body;
     try {
-      const response = await PaymentManager.createPreference(items, purpose);
+      const response = await PaymentManager.createPreference(req.body);
       return res.status(200).json({ id: response.id });
     } catch (error) {
       return res.status(500).json({ error: error.message });
@@ -46,8 +45,7 @@ const MPpaymentController = {
   host_notification_listener: async (req, res) => {
     console.log("🔔 Notificação Atualização Pagamento Mercado Pago 💷\n\n");
     try {
-      const listener = new ListenerModel({ specs: req.body });
-    //  console.log("🔔 Listener: 💷\n" + JSON.stringify(listener));
+     console.log("🔔 MERCADP PAGO DIZ: 💷\n" + JSON.stringify(req.body));
       if (req.body.action === MercadoPagoEnums.LISTENER_UPDATED) {
         const pagamento = await PaymentManager.buscarPagamento(
           req.body.data.id
