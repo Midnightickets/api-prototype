@@ -29,7 +29,7 @@ const PaymentManager = {
       const idempotencyKey = generateIdempotencyKey();
       reqBody.notification_url = process.env.NOTIFICATION_URL;
       // console.log(reqBody)
-      const response = await payment.create({ body: JSON.stringify(reqBody), three_d_secure_mode: 'optional', requestOptions:{
+      const response = await payment.create({ body: reqBody, three_d_secure_mode: 'optional', requestOptions:{
         idempotencyKey: idempotencyKey
       }});
       return response;
