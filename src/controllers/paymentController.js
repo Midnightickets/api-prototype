@@ -49,44 +49,41 @@ const MPpaymentController = {
       if (req.body.action === MercadoPagoEnums.LISTENER_UPDATED) {
         const pagamento = await PaymentManager.buscarPagamento(
           req.body.data.id
-        );
+        ).catch((error) => { console.log(error); throw new Error(error); });
         const recargaPayment = await RecargaPaymentModel.findOne({
-          _id: pagamento.items[0].description,
-        })
-          .then(() => {
-            console.log("Pagamento Encontrado");
-          })
-          .catch((error) => {
-            console.log(JSON.stringify(error));
-            throw error;
+          _id: pagamento.additional_info.items[0].description,
+        }).catch((error) => {
+            console.log(error);
+            throw new Error(error);
           });
+        recargaPayment.payment_id = pagamento.id;
         recargaPayment.status = pagamento.status;
         await recargaPayment.save();
         if (pagamento.status === MercadoPagoEnums.PAYMENT_STATUS_APPROVED) {
           const host = await HostManager.buscarHostIdSimples(
             recargaPayment.host
-          ).then(() => console.log("👨🏼‍💻Host Encontrado")).catch(err => console.log(JSON.stringify(err)))
+          )
+            .catch((err) => console.log(JSON.stringify(err)));
           const pct = await PacoteManager.getCoinsValorByValue(
             recargaPayment.pacote
-          );
+          );  
           if (pct) {
             host.purpleCoins += pct.purpleCoinsCredito;
             host.subCoins += pct.subCoinsCredito;
             await host.save().then(() => {
-              console.log("Compra Bem Sucedida, Saldos do Host Atualizado");
+              console.log("💷 Compra Bem Sucedida, Saldos do Host Atualizado\n\n");
             });
           }
         } else {
-          recargaPayment.status = MercadoPagoEnums.PAYMENT_STATUS_REJECTED;
-          console.log("Pagamento Rejeitado");
+          recargaPayment.status = pagamento.status;
         }
         await recargaPayment.save().then(() => {
-          console.log("Status do pagamento atualizado");
+          console.log("Status do pagamento atualizado para " + pagamento.status.toUpperCase());
         });
       }
-      res.status(201).json();
+      res.status(201).json({ message: "Status do RECARGAPAYMENT atualizado com sucesso." });
     } catch (error) {
-      console.log("Erro notificatio Listener:\n" + JSON.stringify(error));
+      console.log("Erro notification Listener:\n" + JSON.stringify(error));
       res.status(400).json(error);
     }
   },
