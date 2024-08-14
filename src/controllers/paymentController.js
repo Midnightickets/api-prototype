@@ -14,14 +14,22 @@ const MPpaymentController = {
       return res.status(400).json(error);
     }
   },
-  brick_payment: async (req, res) => {
+  buscar_pagamentos_by_host: async (req, res) => {
     try {
-      const response = await PaymentManager.brickPayment(req.body);
-      return res.status(201).json(response);
+      const response = await PaymentManager.buscarPagamentosByHost(req.body);
+      return res.status(200).json(response);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({message: error.message});
     }
   },
+  // brick_payment: async (req, res) => {
+  //   try {
+  //     const response = await PaymentManager.brickPayment(req.body);
+  //     return res.status(201).json(response);
+  //   } catch (error) {
+  //     return res.status(400).json(error);
+  //   }
+  // },
   criar_preference: async (req, res) => {
     try {
       const response = await PaymentManager.createPreference(req.body);

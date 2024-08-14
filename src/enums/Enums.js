@@ -13,6 +13,7 @@ const ErrorEnum = {
     CREATE_EVENTO_GENERIC: 'Erro ao validar evento',
     LOGIN_ERROR: 'Erro no login',
     REQUIRED_FIELDS: 'Campos obrigatórios não preenchidos',
+    ERROR_FINDING_PAYMENTS: 'Erro ao buscar pagamentos',
     // EVENTO
     EVENTO_TITULO_EXISTENTE: 'Você já possui um Evento com esse título',
     INVALID_SUBHOSTS: 'Subhosts inválidos',
