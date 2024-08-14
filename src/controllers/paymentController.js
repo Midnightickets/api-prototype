@@ -50,23 +50,22 @@ const MPpaymentController = {
     }
   },
   host_notification_listener: async (req, res) => {
-    console.log("🔔 Notificação Atualização Pagamento Mercado Pago 💷\n\n");
+    console.log("🔔 Notificação Atualização Pagamento Mercado Pago 🔔\n");
     try {
-      console.log("🔔 MERCADO PAGO DIZ: 💷\n" + JSON.stringify(req.body));
-
-      if (req.body.action === MercadoPagoEnums.LISTENER_UPDATED) {
-        const pagamento = await PaymentManager.buscarPagamento(
-          req.body.data.id
-        ).catch((error) => { console.log(error); throw new Error(error); });
-        const recargaPayment = await RecargaPaymentModel.findOne({
-          _id: pagamento.additional_info.items[0].description,
-        }).catch((error) => {
-            console.log(error);
-            throw new Error(error);
-          });
-        recargaPayment.payment_id = pagamento.id;
+      console.log("🔔 MERCADO PAGO DIZ: 💷\n" + JSON.stringify(req.body.action));
+      const pagamento = await PaymentManager.buscarPagamento(
+        req.body.data.id
+      ).catch((error) => { console.log(error); throw new Error(error); });
+      
+      const recargaPayment = await RecargaPaymentModel.findOne({
+        _id: pagamento.additional_info.items[0].description,
+      }).catch((error) => {
+          console.log(error);
+          throw new Error(error);
+        });
+        console.log(pagamento.status)
         recargaPayment.status = pagamento.status;
-        await recargaPayment.save();
+        recargaPayment.payment_id = pagamento.id;
         if (pagamento.status === MercadoPagoEnums.PAYMENT_STATUS_APPROVED) {
           const host = await HostManager.buscarHostIdSimples(
             recargaPayment.host
@@ -80,19 +79,20 @@ const MPpaymentController = {
             host.subCoins += pct.subCoinsCredito;
             await host.save().then(() => {
               console.log("💷 Compra Bem Sucedida, Saldos do Host Atualizado\n\n");
-            });
+            }).catch((err) => console.log(JSON.stringify(err)));
           }
-        } else {
-          recargaPayment.status = pagamento.status;
         }
+
         await recargaPayment.save().then(() => {
           console.log("Status do pagamento atualizado para " + pagamento.status.toUpperCase());
         });
-      }
-      res.status(201).json({ message: "Status do RECARGAPAYMENT atualizado com sucesso." });
+        res.status(201).json({ message: "Status do RECARGAPAYMENT atualizado com sucesso." });
+        console.log("\n🔔 ----------------- FINAL DA NOTIFICAÇÃO ----------------- 🔔\n");
     } catch (error) {
-      console.log("Erro notification Listener:\n" + JSON.stringify(error));
-      res.status(400).json(error);
+      console.log("Erro notification Listener:\n", error);
+      res.status(400).json({error:'error'});
+      console.log("\n🔔 ----------------- FINAL DA NOTIFICAÇÃO ----------------- 🔔\n");
+
     }
   },
 };

@@ -62,7 +62,7 @@ const PaymentManager = {
       .catch((error) => { console.log(error) })
       
       recargaPaymentCreated.preference_id = response.id;
-      await recargaPaymentCreated.save().then(() => { console.log('Recarga Payment Atualizado') });
+      await recargaPaymentCreated.save().catch((error) => { console.log(error); throw new Error(error); });
 
       return response;
     } catch (error) {
