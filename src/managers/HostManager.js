@@ -1,6 +1,7 @@
 const { ErrorEnum } = require("../enums/Enums");
 const { Host: HostModel } = require("../models/Host");
 const bcrypt = require("bcrypt");
+const Utils = require("../utils");
 
 const HostValidations = {
   startHostValidations: async (host) => {
@@ -75,6 +76,22 @@ const HostManager = {
       throw new Error(error);
     }
   },
+  createAccessPerson: async (host, access) => {
+    const hostValid = await HostManager.getHostByIdCript(host);
+    const hostObject = await HostModel.findOne({ _id: hostValid.id }).catch((err) => { throw new Error(ErrorEnum.HOST_NOT_FOUND) });
+    if(Utils.validaCPF(access.cpf)){
+      throw new Error(ErrorEnum.CPF_CNPJ_INVALIDO);
+    }
+    hostObject.acessos.push(access);
+    await hostObject.save();
+    return access;
+  },
+  getAccessPeople: async (host) => {
+    
+    const hostObject = await HostModel.findOne({ _id: host.id }).catch((err) => { throw new Error(ErrorEnum.ACCESS_PEOPLE_NOT_FOUND) });
+    return hostObject.acessos;
+  }
+  ,
   buscarHostIdSimples: async (id) => {
     const host = await HostModel.findOne({ _id: id });
     if (!host) {

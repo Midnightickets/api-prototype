@@ -25,7 +25,9 @@ const ErrorEnum = {
     // HOST
     HOST_NOT_FOUND: 'Host não encontrado',
     CPF_CNPJ_EXISTENTE: 'Já existe um host com esse CPF/CNPJ',
+    CPF_CNPJ_INVALIDO: 'CPF/CNPJ inválido',
     LOGIN_EXISTENTE: 'Já existe um host com esse email, login ou telefone',
+    ACCESS_PEOPLE_NOT_FOUND: 'Acessos não encontrados',
     // SENHA
     PASSWORD_LENGTH: 'Senha deve ter entre 8 e 20 caracteres',
     INCORRECT_PASSWORD: 'Senha incorreta',

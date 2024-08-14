@@ -68,7 +68,10 @@ const eventoSchema = new Schema({
     status: {
         type: String,
         required: true
-    }
+    },
+    faturamento:{
+        type: Number,
+    },
     },
     { timestamps: false }
 )

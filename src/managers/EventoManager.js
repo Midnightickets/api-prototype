@@ -134,6 +134,7 @@ const EventoManager = {
       status: StatusEnum.EM_ANDAMENTO,
       host: host.id,
       qtd_ingressos: totalIngressos,
+      access_code: Utils.generateAccessCode(),
     };
     const eventoModel = new EventoModel(eventoObject);
     await eventoModel.save();
@@ -192,7 +193,7 @@ const EventoManager = {
         throw new Error(ErrorEnum.REQUIRED_FIELDS);
     })
     return SuccessEnum.UPDATED_EVENTO;
-  },
+  }
 }
 
 module.exports = EventoManager;

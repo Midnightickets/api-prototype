@@ -28,6 +28,24 @@ const hostController = {
                 res.status(400).json({ error: error.message });
             });
     },
+    create_access_person: async (req, res) => {
+        await HostManager.createAccessPerson(req.body)
+            .then((access) =>{
+                res.status(201).json(access);
+            })
+            .catch((error) => {
+                res.status(400).json({ error: error.message });
+            });
+    },
+    get_access_people: async (req, res) => {
+        await HostManager.getAccessPeople(req.body)
+            .then((access) =>{
+                res.status(200).json(access);
+            })
+            .catch((error) => {
+                res.status(400).json({ error: error.message });
+            });
+    },
 }
 
 module.exports = hostController;
