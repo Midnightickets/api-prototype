@@ -47,7 +47,6 @@ const eventoSchema = new Schema({
     subhosts: {
         // arrays de cpfs das pessoas que poderam validar ingressos no evento
         type: [Object],
-        required: true,  
     },
     qtd_ingressos: {
         type: Number,

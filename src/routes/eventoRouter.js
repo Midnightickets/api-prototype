@@ -9,4 +9,8 @@ router.route('/get_evento_host')
     .post((req, res) => eventoController.buscar_evento_host(req, res));
 router.route('/update_evento')
     .put((req, res) => eventoController.atualizar_evento(req, res));
+router.route('/update_subhosts_evento')
+    .put((req, res) => eventoController.atualizar_subhosts_evento(req, res));
+
+
 module.exports = router

@@ -41,6 +41,16 @@ const eventoController = {
             console.log(err);
             res.status(400).json({ error: err.message });
         });
+    },
+    atualizar_subhosts_evento: async (req, res) => {
+        await EventoManager.atualizarSubhostsEvento(req.body.evento, req.body.host)
+        .then((acessos) => {
+            res.status(200).json(acessos);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ error: err.message });
+        });
     }
 }
 

@@ -111,7 +111,7 @@ const EventoActions = {
 const EventoManager = {
   createEvento: async (evento, host) => {
     const myhost = await HostManager.getHostById(host);
-    evento.subhosts = [{id: myhost.cpf_cnpj, nome: myhost.nome_razao}];
+    evento.subhosts = [j];
     const pct = await EventoActions.verificarSaldoPurpleCoinsHostPacote(
       myhost,
       evento
@@ -197,12 +197,14 @@ const EventoManager = {
     evento.id = evento._id;
     const eventoObject = await EventoManager.getEventoByHost(myhost, evento);
     await EventoActions.validaSubhosts(evento.subhosts);
+
     eventoObject.subhosts = evento.subhosts;
     await eventoObject.save()
     .catch((err) => {
+      console.log(err);
         throw new Error(ErrorEnum.REQUIRED_FIELDS);
     })
-    return SuccessEnum.UPDATED_EVENTO;
+    return eventoObject.subhosts;
   },
 }
 
