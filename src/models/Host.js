@@ -54,11 +54,6 @@ const hostSchema = new Schema({
     acessos:{
         type: [Object],      
     },
-    access_code:{
-        type: Number,
-        maxlength: 4,
-        required: true,
-    },
     saque:{
         type: [Object],
         required: true,

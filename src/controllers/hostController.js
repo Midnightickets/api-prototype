@@ -29,7 +29,7 @@ const hostController = {
             });
     },
     create_access_person: async (req, res) => {
-        await HostManager.createAccessPerson(req.body)
+        await HostManager.createAccessPerson(req.body.host, req.body.acesso)
             .then((access) =>{
                 res.status(201).json(access);
             })

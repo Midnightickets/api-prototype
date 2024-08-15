@@ -28,6 +28,7 @@ const ErrorEnum = {
     CPF_CNPJ_INVALIDO: 'CPF/CNPJ inválido',
     LOGIN_EXISTENTE: 'Já existe um host com esse email, login ou telefone',
     ACCESS_PEOPLE_NOT_FOUND: 'Acessos não encontrados',
+    ACCESS_PEOPLE_EXISTENTE: 'Acesso já existente',
     // SENHA
     PASSWORD_LENGTH: 'Senha deve ter entre 8 e 20 caracteres',
     INCORRECT_PASSWORD: 'Senha incorreta',

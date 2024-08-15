@@ -77,27 +77,42 @@ const HostManager = {
     }
   },
   createAccessPerson: async (host, access) => {
-    const hostValid = await HostManager.getHostByIdCript(host);
-    const hostObject = await HostModel.findOne({ _id: hostValid.id }).catch((err) => { throw new Error(ErrorEnum.HOST_NOT_FOUND) });
-    if(Utils.validaCPF(access.cpf)){
-      throw new Error(ErrorEnum.CPF_CNPJ_INVALIDO);
+    if(!access.id || !access.nome) {
+      throw new Error(ErrorEnum.REQUIRED_FIELDS);
     }
-    hostObject.acessos.push(access);
-    await hostObject.save();
+    const hostValid = await HostManager.getHostByIdCript(host);
+    if(!hostValid.acessos || hostValid.acessos.length === 0) {
+      hostValid.acessos = [];
+    } else {
+      hostValid.acessos.forEach((element) => {
+        if (element.id === access.id) {
+          throw new Error(ErrorEnum.ACCESS_PEOPLE_EXISTENTE);
+        }
+      })
+    }
+    hostValid.acessos.push(access);
+    await hostValid.save();
     return access;
   },
   getAccessPeople: async (host) => {
-    
-    const hostObject = await HostModel.findOne({ _id: host.id }).catch((err) => { throw new Error(ErrorEnum.ACCESS_PEOPLE_NOT_FOUND) });
-    return hostObject.acessos;
-  }
-  ,
+    const hostValid = await HostManager.getHostByIdCript(host);
+    return hostValid.acessos;
+  },
   buscarHostIdSimples: async (id) => {
     const host = await HostModel.findOne({ _id: id });
     if (!host) {
       throw new Error(ErrorEnum.HOST_NOT_FOUND);
     }
     return host;
+  },
+  deleteAccessPerson: async (host, access) => {
+    if(!access.id) {
+      throw new Error(ErrorEnum.REQUIRED_FIELDS);
+    }
+    const hostValid = await HostManager.getHostByIdCript(host);
+    hostValid.acessos = hostValid.acessos.filter((element) => element.id !== access.id);
+    await hostValid.save();
+    return access;
   },
   getUpdatedMoneys: async (host) => {
     const hostObject = await HostModel.findOne({ _id: host.id, senha: host.senha });

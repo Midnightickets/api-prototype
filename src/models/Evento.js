@@ -60,6 +60,11 @@ const eventoSchema = new Schema({
     img_url: {
         type: String, 
     },
+    access_code:{
+        type: Number,
+        maxlength: 4,
+        required: true,
+    },
     host: {
         type: Schema.Types.ObjectId,
         ref: 'Host',

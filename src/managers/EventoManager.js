@@ -43,9 +43,6 @@ const EventoActions = {
     if (!Array.isArray(subhosts)) {
       throw new Error(ErrorEnum.INVALID_SUBHOSTS);
     }
-    for (const subhost of subhosts) {
-      await Utils.validaCPF(subhost.id);
-    }
   },
   validaQtdIngressos: async (evento) => {
     if (
@@ -100,7 +97,7 @@ const EventoActions = {
         id: evento._id,
         titulo: evento.titulo,
         data_evento:
-          evento.data_evento.replaceAll("-", "/") + " às " + evento.hora_evento,
+        evento.data_evento.replaceAll("-", "/") + " às " + evento.hora_evento,
         status: evento.status,
         pacote: evento.pacote.label,
         subhosts: evento.subhosts.length,
@@ -188,12 +185,25 @@ const EventoManager = {
     eventoObject.hora_evento = evento.hora_evento;
     eventoObject.hora_final = evento.hora_final;
     eventoObject.endereco = evento.endereco;
+    eventoObject.access_code = evento.access_code;
     await eventoObject.save()
     .catch((err) => {
         throw new Error(ErrorEnum.REQUIRED_FIELDS);
     })
     return SuccessEnum.UPDATED_EVENTO;
-  }
+  },
+  atualizarSubhostsEvento: async (evento, host) => {
+    const myhost = await HostManager.getHostByIdCript(host);
+    evento.id = evento._id;
+    const eventoObject = await EventoManager.getEventoByHost(myhost, evento);
+    await EventoActions.validaSubhosts(evento.subhosts);
+    eventoObject.subhosts = evento.subhosts;
+    await eventoObject.save()
+    .catch((err) => {
+        throw new Error(ErrorEnum.REQUIRED_FIELDS);
+    })
+    return SuccessEnum.UPDATED_EVENTO;
+  },
 }
 
 module.exports = EventoManager;
