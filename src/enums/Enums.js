@@ -22,6 +22,7 @@ const ErrorEnum = {
     INVALID_LOCALIZACAO: 'Localização inválida',
     EVENTO_NOT_FOUND: 'Evento não encontrado',
     UPDATE_EVENTO: 'Campos Obrigatórios não preenchidos ou Título já Existente em outro Evento seu',
+    INVALID_DATA_EVENTO: 'A Data do Evento deve não pode ser anterior a data atual',
     // HOST
     HOST_NOT_FOUND: 'Host não encontrado',
     CPF_CNPJ_EXISTENTE: 'Já existe um host com esse CPF/CNPJ',

@@ -10,6 +10,7 @@ const EventoActions = {
   startCreateEventoAction: async (evento, host) => {
     //fluxo de validacao para criacao de eventos
     await EventoActions.checkREQUIRED(evento);
+    await EventoActions.validaDataEvento(evento);
     await EventoActions.validaTituloEventoHost(evento, host);
     await EventoActions.validaSubhosts(evento.subhosts);
     await EventoActions.validaQtdIngressos(evento);
@@ -106,12 +107,29 @@ const EventoActions = {
       };
     });
   },
+  validaDataEvento: async (evento) => {
+    // Convertendo a data de entrada para o formato adequado
+    const [day, month, year] = evento.data_evento.split('-');
+    const formatedDate = `${year}-${month}-${day}`;
+ 
+    // Criando o objeto Date com a data do evento
+    const dataEvento = new Date(formatedDate);
+
+    // Obtendo a data atual
+    const dataAtual = new Date();
+
+    // Comparando as datas
+    if (dataEvento < dataAtual) {
+      throw new Error(ErrorEnum.INVALID_DATA_EVENTO);
+    }
+}
+
 };
 
 const EventoManager = {
   createEvento: async (evento, host) => {
     const myhost = await HostManager.getHostById(host);
-    evento.subhosts = [j];
+    evento.subhosts = [];
     const pct = await EventoActions.verificarSaldoPurpleCoinsHostPacote(
       myhost,
       evento
@@ -177,6 +195,8 @@ const EventoManager = {
     if(eventoObject.titulo !== evento.titulo){
       await EventoActions.validaTituloEventoHost(evento, myhost);
     }
+    await EventoActions.validaDataEvento(evento)
+    await EventoActions.validaLocalizacao(evento)
     eventoObject.titulo = evento.titulo;
     eventoObject.img_url = evento.img_url;
     eventoObject.descricao = evento.descricao;
@@ -185,6 +205,7 @@ const EventoManager = {
     eventoObject.hora_evento = evento.hora_evento;
     eventoObject.hora_final = evento.hora_final;
     eventoObject.endereco = evento.endereco;
+    eventoObject.localizacao = evento.localizacao;
     eventoObject.access_code = evento.access_code;
     await eventoObject.save()
     .catch((err) => {
