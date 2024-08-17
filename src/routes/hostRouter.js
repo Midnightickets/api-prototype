@@ -16,4 +16,7 @@ router.route('/create_access_person')
 router.route('/get_access_people')
     .post((req, res) => hostController.get_access_people(req, res));
     
+router.route('/delete_access_person')
+    .post((req, res) => hostController.remove_access_person(req, res));
+    
 module.exports = router

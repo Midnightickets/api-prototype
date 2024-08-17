@@ -46,6 +46,15 @@ const hostController = {
                 res.status(400).json({ error: error.message });
             });
     },
+    remove_access_person: async (req, res) => {
+        await HostManager.removeAccessPerson(req.body.host, req.body.acesso)
+            .then((access) =>{
+                res.status(200).json(access);
+            })
+            .catch((error) => {
+                res.status(400).json({ error: error.message });
+            });
+    },
 }
 
 module.exports = hostController;

@@ -98,6 +98,15 @@ const HostManager = {
     const hostValid = await HostManager.getHostByIdCript(host);
     return hostValid.acessos;
   },
+  removeAccessPerson: async (host, access) => {
+    if(!access.id) {
+      throw new Error(ErrorEnum.REQUIRED_FIELDS);
+    }
+    const hostValid = await HostManager.getHostByIdCript(host);
+    hostValid.acessos = hostValid.acessos.filter((element) => element.id !== access.id);
+    await hostValid.save();
+    return access;
+  },
   buscarHostIdSimples: async (id) => {
     const host = await HostModel.findOne({ _id: id });
     if (!host) {
