@@ -51,6 +51,16 @@ const eventoController = {
             console.log(err);
             res.status(400).json({ error: err.message });
         });
+    },
+    cancelar_evento: async (req, res) => {
+        await EventoManager.cancelarEvento(req.body.evento, req.body.host)
+        .then((message) => {
+            res.status(200).json({ message });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ error: err.message });
+        });
     }
 }
 

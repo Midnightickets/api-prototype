@@ -72,7 +72,7 @@ const EventoActions = {
     if (
       !evento.localizacao.includes(
         '<iframe src="https://www.google.com/maps/embed'
-      ) &&
+      ) ||
       !evento.localizacao.includes("</iframe>")
     ) {
       throw new Error(ErrorEnum.INVALID_LOCALIZACAO);
@@ -189,6 +189,9 @@ const EventoManager = {
     return eventoObject;
   },
   atualizarEvento: async (evento, host) => {
+    if(evento.status !== StatusEnum.EM_ANDAMENTO){
+      throw new Error(ErrorEnum.EVENTO_INDISPONIVEL);
+    }
     const myhost = await HostManager.getHostByIdCript(host);
     evento.id = evento._id;
     const eventoObject = await EventoManager.getEventoByHost(myhost, evento);
@@ -196,7 +199,10 @@ const EventoManager = {
       await EventoActions.validaTituloEventoHost(evento, myhost);
     }
     await EventoActions.validaDataEvento(evento)
-    await EventoActions.validaLocalizacao(evento)
+    if(eventoObject.localizacao !== evento.localizacao){
+      await EventoActions.validaLocalizacao(evento)
+      eventoObject.localizacao = evento.localizacao;
+    }
     eventoObject.titulo = evento.titulo;
     eventoObject.img_url = evento.img_url;
     eventoObject.descricao = evento.descricao;
@@ -205,7 +211,6 @@ const EventoManager = {
     eventoObject.hora_evento = evento.hora_evento;
     eventoObject.hora_final = evento.hora_final;
     eventoObject.endereco = evento.endereco;
-    eventoObject.localizacao = evento.localizacao;
     eventoObject.access_code = evento.access_code;
     await eventoObject.save()
     .catch((err) => {
@@ -227,6 +232,17 @@ const EventoManager = {
     })
     return eventoObject.subhosts;
   },
+  cancelarEvento: async (evento, host) => {
+    const myhost = await HostManager.getHostByIdCript(host);
+    evento.id = evento._id;
+    const eventoObject = await EventoManager.getEventoByHost(myhost, evento);
+    eventoObject.status = StatusEnum.CANCELADO;
+    await eventoObject.save()
+    .catch((err) => {
+        throw new Error(ErrorEnum.REQUIRED_FIELDS);
+    })
+    return SuccessEnum.CANCELED_EVENTO;
+  }
 }
 
 module.exports = EventoManager;
