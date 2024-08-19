@@ -5,6 +5,7 @@ const SuccessEnum = {
     CREATE_EVENTO: 'Evento criado com sucesso',
     CREATE_HOST: 'Host criado com sucesso',
     UPDATED_EVENTO: 'Evento atualizado com sucesso',
+    UPDATED_LOTE_INGRESSO: 'Lote de ingressos atualizado com sucesso',
     CANCELED_EVENTO: 'Evento Cancelado com sucesso',
 }
 
@@ -25,6 +26,7 @@ const ErrorEnum = {
     UPDATE_EVENTO: 'Campos Obrigatórios não preenchidos ou Título já Existente em outro Evento seu',
     INVALID_DATA_EVENTO: 'A Data do Evento deve não pode ser anterior a data atual',
     EVENTO_INDISPONIVEL: 'Evento indisponível',
+    UPDATE_LOTE_INGRESSO: 'Lote de ingressos inválidos',
     // HOST
     HOST_NOT_FOUND: 'Host não encontrado',
     CPF_CNPJ_EXISTENTE: 'Já existe um host com esse CPF/CNPJ',

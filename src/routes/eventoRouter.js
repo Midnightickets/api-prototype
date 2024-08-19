@@ -13,5 +13,6 @@ router.route('/update_subhosts_evento')
     .put((req, res) => eventoController.atualizar_subhosts_evento(req, res));
 router.route('/cancel_evento')
     .put((req, res) => eventoController.cancelar_evento(req, res));
-
+router.route('/lote_ingresso')
+    .put((req, res) => eventoController.alterar_lote_ingresso(req, res));
 module.exports = router

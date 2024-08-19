@@ -104,6 +104,7 @@ const EventoActions = {
         subhosts: evento.subhosts.length,
         tipos_ingressos: evento.tipos_ingressos.length + " tipo(s)",
         qtd_ingressos: evento.qtd_ingressos,
+        access_code: evento.access_code,
       };
     });
   },
@@ -121,9 +122,8 @@ const EventoActions = {
     // Comparando as datas
     if (dataEvento < dataAtual) {
       throw new Error(ErrorEnum.INVALID_DATA_EVENTO);
-    }
+    } 
 }
-
 };
 
 const EventoManager = {
@@ -242,6 +242,31 @@ const EventoManager = {
         throw new Error(ErrorEnum.REQUIRED_FIELDS);
     })
     return SuccessEnum.CANCELED_EVENTO;
+  },
+  alterarLoteIngressos: async (evento, host) => {
+    const myhost = await HostManager.getHostByIdCript(host);
+    evento.id = evento._id;
+    const eventoObject = await EventoManager.getEventoByHost(myhost, evento);
+    
+    const formatStringToNumber = () => {
+      evento.tipos_ingressos.forEach((ingresso) => {
+        if(ingresso.valor.includes(',')){
+          ingresso.valor = ingresso.valor.replace(',', '.');
+          ingresso.valor = Number(ingresso.valor).toFixed(2);
+          ingresso.valor = ingresso.valor.replace('.', ',');
+        } else {
+          ingresso.valor = Number(ingresso.valor).toFixed(2);
+          ingresso.valor = ingresso.valor.replace('.', ',');
+        }
+      });
+    }
+    formatStringToNumber();
+    eventoObject.tipos_ingressos = evento.tipos_ingressos;
+    await eventoObject.save()
+    .catch((err) => {
+        throw new Error(ErrorEnum.UPDATE_LOTE_INGRESSO);
+    })
+    return {message: SuccessEnum.UPDATED_LOTE_INGRESSO, tipos_ingressos: eventoObject.tipos_ingressos};
   }
 }
 

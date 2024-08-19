@@ -61,7 +61,17 @@ const eventoController = {
             console.log(err);
             res.status(400).json({ error: err.message });
         });
-    }
+    },
+    alterar_lote_ingresso: async (req, res) => {
+        await EventoManager.alterarLoteIngressos(req.body.evento, req.body.host)
+        .then((response) => {
+            res.status(200).json({ response });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ error: err.message });
+        });
+    },
 }
 
 module.exports = eventoController;
