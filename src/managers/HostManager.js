@@ -1,4 +1,4 @@
-const { ErrorEnum } = require("../enums/Enums");
+const { ErrorEnum, SuccessEnum } = require("../enums/Enums");
 const { Host: HostModel } = require("../models/Host");
 const bcrypt = require("bcrypt");
 const Utils = require("../utils");
@@ -210,6 +210,17 @@ const HostManager = {
     } else {
       throw new Error(ErrorEnum.HOST_NOT_FOUND);
     }
+  },
+  transformSubCoins: async (host) => {
+    const hostValid = await HostManager.getHostByIdCript(host);
+    if(hostValid.subCoins < 5000) {
+      throw new Error(ErrorEnum.SUBCOINS_INSUFICIENTE);
+    }   
+    hostValid.subCoins -= 5000;
+    hostValid.purpleCoins += 1;
+    await hostValid.save();
+
+    return SuccessEnum.SUBCOINS_TRANSFORMED;
   },
 };
 

@@ -18,5 +18,6 @@ router.route('/get_access_people')
     
 router.route('/delete_access_person')
     .post((req, res) => hostController.remove_access_person(req, res));
-    
+router.route('/cashback')
+    .post((req, res) => hostController.transform_subcoins(req, res));
 module.exports = router

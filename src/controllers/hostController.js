@@ -55,6 +55,15 @@ const hostController = {
                 res.status(400).json({ error: error.message });
             });
     },
+    transform_subcoins: async (req, res) => {
+        await HostManager.transformSubCoins(req.body)
+            .then((msg) =>{
+                res.status(200).json(msg);
+            })
+            .catch((error) => {
+                res.status(400).json({ error: error.message });
+            });
+    }
 }
 
 module.exports = hostController;

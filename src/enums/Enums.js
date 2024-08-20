@@ -1,6 +1,7 @@
 const SuccessEnum = {
     // HOST
     LOGIN_SUCCESS: 'Login realizado com sucesso',
+    SUBCOINS_TRANSFORMED: 'SubCoins transformados em PurpleCoins com sucesso',
     // EVENTO
     CREATE_EVENTO: 'Evento criado com sucesso',
     CREATE_HOST: 'Host criado com sucesso',
@@ -34,6 +35,7 @@ const ErrorEnum = {
     LOGIN_EXISTENTE: 'Já existe um host com esse email, login ou telefone',
     ACCESS_PEOPLE_NOT_FOUND: 'Acessos não encontrados',
     ACCESS_PEOPLE_EXISTENTE: 'Acesso já existente',
+    SUBCOINS_INSUFICIENTE: 'Saldo de SubCoins insuficiente',
     // SENHA
     PASSWORD_LENGTH: 'Senha deve ter entre 8 e 20 caracteres',
     INCORRECT_PASSWORD: 'Senha incorreta',
