@@ -18,14 +18,14 @@ const ErrorEnum = {
     REQUIRED_FIELDS: 'Campos obrigatórios não preenchidos',
     ERROR_FINDING_PAYMENTS: 'Erro ao buscar pagamentos',
     // EVENTO
-    EVENTO_TITULO_EXISTENTE: 'Você já possui um Evento com esse título',
+    EVENTO_TITULO_EXISTENTE: 'Você já possui um Evento Ativo com esse Título',
     INVALID_SUBHOSTS: 'Subhosts inválidos',
     INVALID_TIPOS_INGRESSOS: 'Tipos de ingressos inválidos',
     INVALID_QTD_INGRESSOS: 'Quantidade de ingressos inválida',
     INVALID_LOCALIZACAO: 'Localização inválida',
     EVENTO_NOT_FOUND: 'Evento não encontrado',
     UPDATE_EVENTO: 'Campos Obrigatórios não preenchidos ou Título já Existente em outro Evento seu',
-    INVALID_DATA_EVENTO: 'A Data do Evento deve não pode ser anterior a data atual',
+    INVALID_DATA_EVENTO: 'A Data do Evento não pode ser anterior a data atual',
     EVENTO_INDISPONIVEL: 'Evento indisponível',
     UPDATE_LOTE_INGRESSO: 'Lote de ingressos inválidos',
     // HOST

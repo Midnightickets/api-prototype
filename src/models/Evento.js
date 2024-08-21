@@ -6,11 +6,11 @@ const eventoSchema = new Schema({
     titulo: {
         type: String,
         required: true,
-        maxlength: 80
+        maxlength: 50
     },
     descricao: {
         type: String,
-        maxlength: 800,
+        maxlength: 500,
     },
     endereco: {
         type: String,
@@ -57,7 +57,7 @@ const eventoSchema = new Schema({
         required: true,
     },
     img_url: {
-        type: String, 
+        type: String,
     },
     access_code:{
         type: Number,

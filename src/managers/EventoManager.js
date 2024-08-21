@@ -3,8 +3,6 @@ const { Evento: EventoModel } = require("../models/Evento");
 const HostManager = require("./HostManager");
 const PacoteManager = require("./PacoteManager");
 const Utils = require("../utils");
-const bcrypt = require("bcrypt");
-const e = require("express");
 
 const EventoActions = {
   startCreateEventoAction: async (evento, host) => {
@@ -35,10 +33,12 @@ const EventoActions = {
     const eventoObject = await EventoModel.find({
       titulo: evento.titulo,
       host: host.id,
+      status: StatusEnum.EM_ANDAMENTO,
     });
     if (eventoObject.length > 0) {
       throw new Error(ErrorEnum.EVENTO_TITULO_EXISTENTE);
     }
+    evento.titulo = evento.titulo.trim().toUpperCase();
   },
   validaSubhosts: async (subhosts) => {
     if (!Array.isArray(subhosts)) {
@@ -110,14 +110,16 @@ const EventoActions = {
   },
   validaDataEvento: async (evento) => {
     // Convertendo a data de entrada para o formato adequado
-    const [day, month, year] = evento.data_evento.split('-');
+    const [day, month, year] = evento.data_evento.slice(0,-6).split('-');
     const formatedDate = `${year}-${month}-${day}`;
  
     // Criando o objeto Date com a data do evento
     const dataEvento = new Date(formatedDate);
+    dataEvento.setHours(0, 0, 0, 0); // Zera as horas para comparação
 
     // Obtendo a data atual
     const dataAtual = new Date();
+    dataAtual.setHours(0, 0, 0, 0); // Zera as horas para comparação
 
     // Comparando as datas
     if (dataEvento < dataAtual) {
@@ -150,6 +152,7 @@ const EventoManager = {
       host: host.id,
       qtd_ingressos: totalIngressos,
       access_code: Utils.generateAccessCode(),
+      faturamento: 0,
     };
     const eventoModel = new EventoModel(eventoObject);
     await eventoModel.save();
