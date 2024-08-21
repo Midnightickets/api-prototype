@@ -109,20 +109,13 @@ const EventoActions = {
     });
   },
   validaDataEvento: async (evento) => {
-    // Convertendo a data de entrada para o formato adequado
-    const [day, month, year] = evento.data_evento.slice(0,-6).split('-');
-    const formatedDate = `${year}-${month}-${day}`;
- 
-    // Criando o objeto Date com a data do evento
-    const dataEvento = new Date(formatedDate);
-    dataEvento.setHours(0, 0, 0, 0); // Zera as horas para comparação
+    const [day, month, year] = evento.data_evento.split('-');
+    const dataEventoDate = new Date(year, month - 1, day); // Mês é zero-indexado
 
-    // Obtendo a data atual
     const dataAtual = new Date();
     dataAtual.setHours(0, 0, 0, 0); // Zera as horas para comparação
 
-    // Comparando as datas
-    if (dataEvento < dataAtual) {
+    if (dataEventoDate < dataAtual) {
       throw new Error(ErrorEnum.INVALID_DATA_EVENTO);
     } 
 }
