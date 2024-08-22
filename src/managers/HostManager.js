@@ -1,7 +1,6 @@
 const { ErrorEnum, SuccessEnum } = require("../enums/Enums");
 const { Host: HostModel } = require("../models/Host");
 const bcrypt = require("bcrypt");
-const Utils = require("../utils");
 
 const HostValidations = {
   startHostValidations: async (host) => {

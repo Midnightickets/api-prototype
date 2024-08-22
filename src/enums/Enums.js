@@ -46,6 +46,11 @@ const ErrorEnum = {
     INVALID_PACOTE_EVENTO: 'Pacote de ingressos inválido',
     INVALID_COIN: 'Moeda virtual inválida',
     PURPLECOINS_INSUFICIENTE: 'Saldo de PurpleCoins insuficiente',
+    // USER
+    USER_NOT_FOUND: 'Usuário não encontrado',
+    INVALID_CREDENTIALS: 'Credenciais inválidas',
+    INVALID_CPF: 'CPF inválido',
+    USER_EXISTENT: 'CPF, email ou telefone já cadastrado no sistema',
 }
 
 const StatusEnum = {

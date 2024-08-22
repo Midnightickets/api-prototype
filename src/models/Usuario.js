@@ -16,23 +16,23 @@ const usuarioSchema = new Schema({
     },
     nome: {
         type: String,
-        maxlength: 100,
+        maxlength: 70,
         required: true,
     },
     dataNascimento:{
         type: Date,
-        required: true,
     },
     telefone:{
         type: String,
         required: true,
+        unique: true,
         maxlength: 30,
     },
     email:{
         type: String,
         required: true,
         unique: true,
-        maxlength: 60,
+        maxlength: 100,
     }, 
     },
     { timestamps: true }
@@ -40,6 +40,7 @@ const usuarioSchema = new Schema({
 )
 usuarioSchema.index({ cpf: 1 }, { unique: true });
 usuarioSchema.index({ email: 1 }, { unique: true });
+usuarioSchema.index({ telefone: 1 }, { unique: true });
 
 const Usuario = mongoose.model('Usuario', usuarioSchema)
 
