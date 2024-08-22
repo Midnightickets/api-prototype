@@ -17,11 +17,11 @@ const usuarioController = {
     loginUsuario: async (req, res) => {
         await UsuarioManager.login(req.body)
         .then((response) => {
-            return res.status(200).json(response);
-        })
-        .catch((error) => {
-            return res.status(400).json(error);
+             res.status(200).json(response);
+        }).catch(() => {
+             res.status(400).json(ErrorEnum.INVALID_CREDENTIALS);
         });
+        
     }
 }
 
