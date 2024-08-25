@@ -16,3 +16,5 @@ router.route('/cancel_evento')
 router.route('/lote_ingresso')
     .put((req, res) => eventoController.alterar_lote_ingresso(req, res));
 module.exports = router
+router.route('/buscar')
+    .post((req, res) => eventoController.buscar_evento_titulo(req, res));

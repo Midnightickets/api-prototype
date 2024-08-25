@@ -24,10 +24,12 @@ const ErrorEnum = {
     INVALID_QTD_INGRESSOS: 'Quantidade de ingressos inválida',
     INVALID_LOCALIZACAO: 'Localização inválida',
     EVENTO_NOT_FOUND: 'Evento não encontrado',
+    NO_EVENTS_FOUND: 'Nenhum evento encontrado',
     UPDATE_EVENTO: 'Campos Obrigatórios não preenchidos ou Título já Existente em outro Evento seu',
     INVALID_DATA_EVENTO: 'A Data do Evento não pode ser anterior a data atual',
     EVENTO_INDISPONIVEL: 'Evento indisponível',
     UPDATE_LOTE_INGRESSO: 'Lote de ingressos inválidos',
+    TITULO_INGRESSO_EXISTENTE: 'Título de ingresso já existente',
     // HOST
     HOST_NOT_FOUND: 'Host não encontrado',
     CPF_CNPJ_EXISTENTE: 'Já existe um host com esse CPF/CNPJ',
@@ -58,7 +60,12 @@ const StatusEnum = {
     PENDENTE: '🟡 Pendente',
     EM_ANDAMENTO: '🟢 Em andamento',
     FINALIZADO: '🟣 Finalizado',
-    CANCELADO: '🔴 Cancelado'
+    CANCELADO: '🔴 Cancelado',
+    // INGRESSO
+    PAGO: '🟢 Pago',
+    PENDENTE: '🔵 Pendente',
+    RECUSADO: '🔴 Recusado',
+    PREFERENCIA_CRIADA: '🟡 Preferência criada',
 }
 
 module.exports = {

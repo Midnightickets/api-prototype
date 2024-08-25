@@ -14,9 +14,9 @@ const CoinsValores = [
     { tipo: 'recarga de purplecoins', id: 1,value: 1, label: '1 PurpleCoin', preco: 120, purpleCoinsCredito: 1, subCoinsCredito: 0},
     { tipo: 'recarga de purplecoins', id: 2,value: 2, label: '3 PurpleCoins', preco: 300, purpleCoinsCredito: 3, subCoinsCredito: 0},
     { tipo: 'recarga de purplecoins', id: 3,value: 3, label: '5 PurpleCoins', preco: 500, purpleCoinsCredito: 5, subCoinsCredito: 0},
-    { tipo: 'recarga de purplecoins', id: 4,value: 4, label: '12 PurpleCoins + 50 SubCoins', preco: 1000, purpleCoinsCredito: 12, subCoinsCredito: 50},
-    { tipo: 'recarga de purplecoins', id: 5,value: 5, label: '25 PurpleCoins + 150 SubCoins', preco: 2000, purpleCoinsCredito: 25, subCoinsCredito: 150},
-    { tipo: 'teste 1 real', id: 6,value: 6, label: '10 SubCoins', preco: 1, purpleCoinsCredito: 0 , subCoinsCredito: 10},
+    { tipo: 'recarga de purplecoins', id: 4,value: 4, label: '12 PurpleCoins + 50 SubCoins', preco: 1000, purpleCoinsCredito: 12, subCoinsCredito: 100},
+    { tipo: 'recarga de purplecoins', id: 5,value: 5, label: '25 PurpleCoins + 150 SubCoins', preco: 2000, purpleCoinsCredito: 25, subCoinsCredito: 500},
+    // { tipo: 'teste 1 real', id: 6,value: 6, label: '10 SubCoins', preco: 1, purpleCoinsCredito: 0 , subCoinsCredito: 10},
 ];
 
 const EventoOptionsManager = {

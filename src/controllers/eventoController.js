@@ -72,6 +72,16 @@ const eventoController = {
             res.status(400).json({ error: err.message });
         });
     },
+    buscar_evento_titulo: async (req, res) => {
+        await EventoManager.buscarEventoPorTitulo(req.body.titulo)
+        .then((evento) => {
+            res.status(200).json(evento);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ error: err.message });
+        });
+    }
 }
 
 module.exports = eventoController;

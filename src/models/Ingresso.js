@@ -3,57 +3,26 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const ingressoSchema = new Schema({
-    titulo: {
-        type: String,
-        required: true,
-        maxlength: 50
-    },
-    valor: {
-        type: Number,
-        required: true,
-    },
-    regras: {
-        type: String,
-        required: true,
-        maxlength: 400,
-    },
-    usuario_comprador: {
+    usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario',
-        required: true
+        required: true,
     },
     code: {
         type: String,
         required: true,
-        unique: true
-    },
-    valor: {
-        type: Number,
-        required: true
-    },
-    nome_ingresso: {
-        type: String,
-        required: true
     },
     evento: {
         type: Schema.Types.ObjectId,
         ref: 'Evento',
         required: true
     },
-    data_compra: {
-        type: Date,
-        default: Date.now
+    payment_stats: {
+        type: Object,
+        // required: true
     },
-    telefone: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    tipo_ingresso: {
-        type: String,
+    ingresso: {
+        type: Object,
         required: true
     },
     status: {
@@ -61,8 +30,9 @@ const ingressoSchema = new Schema({
         required: true
     },
 },
-    { timestamps: false }
+    { timestamps: true }
 )
+
 ingressoSchema.index({ code: 1 }, { unique: true });
 
 const Ingresso = mongoose.model('Ingresso', ingressoSchema)
