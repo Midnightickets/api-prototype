@@ -57,7 +57,15 @@ const UsuarioManager = {
     login: async (user) => {
         const usuario = await UsuarioModel.findOne({cpf: user.cpf});
         if (usuario && (await bcrypt.compare(user.senha, usuario.senha))) {  
-            return usuario;
+            const usuarioResponse = {
+                nome: usuario.nome,
+                cpf: usuario.cpf,
+                email: usuario.email,
+                token: usuario.senha,
+                telefone: usuario.telefone,
+                login: usuario.login
+            }
+            return usuarioResponse;
         } else{
             throw new Error(ErrorEnum.INVALID_CREDENTIALS);
         }

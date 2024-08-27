@@ -339,6 +339,31 @@ const EventoManager = {
 
     return montarResponse(eventoObjects);
   },
+  buscarEventoPublico: async (evento) => {
+    const eventoObject = await EventoModel.findById(evento.id).populate("host");
+    if (!eventoObject) {
+      throw new Error(ErrorEnum.EVENTO_NOT_FOUND);
+    }
+    const eventoResponse = {
+      id: eventoObject._id,
+      titulo: eventoObject.titulo,
+      descricao: eventoObject.descricao,
+      contato: eventoObject.contato,
+      data_evento:
+        eventoObject.data_evento.replaceAll("-", "/") +
+        " às " +
+        eventoObject.hora_evento,
+      hora_final: eventoObject.hora_final,
+      endereco: eventoObject.endereco,
+      localizacao: eventoObject.localizacao,
+      img_url: eventoObject.img_url,
+      host: eventoObject.host.nome_razao,
+      tipos_ingressos: eventoObject.tipos_ingressos,
+      qtd_ingressos: eventoObject.qtd_ingressos,
+    };
+
+    return eventoResponse;
+  }
 };
 
 module.exports = EventoManager;

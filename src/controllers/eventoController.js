@@ -81,6 +81,16 @@ const eventoController = {
             console.log(err);
             res.status(400).json({ error: err.message });
         });
+    },
+    buscar_evento_publico: async (req, res) => {
+        await EventoManager.buscarEventoPublico(req.body.evento)
+        .then((evento) => {
+            res.status(200).json(evento);
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(400).json({ error: err.message });
+        });
     }
 }
 
