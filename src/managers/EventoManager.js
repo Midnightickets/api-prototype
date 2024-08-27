@@ -135,20 +135,22 @@ const EventoManager = {
       (total, tipo) => total + tipo.quantidade,
       0
     );
+    const cloneTiposIngressos = evento.tipos_ingressos;
+    // Função para verificar títulos iguais
     const checkTitulosIguais = () => {
-      evento.tipos_ingressos.forEach((ingresso) => {
-        evento.tipos_ingressos.forEach((ingressoObject) => {
+      cloneTiposIngressos.forEach((ingresso, index) => {
+        for (let i = index + 1; i < cloneTiposIngressos.length; i++) {
           if (
             ingresso.titulo.trim().toLowerCase() ===
-            ingressoObject.titulo.trim().toLowerCase()
+            cloneTiposIngressos[i].titulo.trim().toLowerCase()
           ) {
             throw new Error(ErrorEnum.TITULO_INGRESSO_EXISTENTE);
-          } else {
-            ingresso.titulo = ingresso.titulo.trim().toUpperCase();
           }
-        });
+        }
+        ingresso.titulo = ingresso.titulo.trim().toUpperCase();
       });
     };
+
     checkTitulosIguais();
     const msgPurpleCoins = await HostManager.usarPurpleCoins(
       myhost,
@@ -261,20 +263,21 @@ const EventoManager = {
     evento.id = evento._id;
     const eventoObject = await EventoManager.getEventoByHost(myhost, evento);
     const checkTituloIngressos = () => {
-      evento.tipos_ingressos.forEach((ingresso) => {
-        eventoObject.tipos_ingressos.forEach((ingressoObject) => {
+      evento.tipos_ingressos.forEach((ingresso, index) => {
+        eventoObject.tipos_ingressos.forEach((ingressoObject, objectIndex) => {
           if (
+            index !== objectIndex && // Verifica se não está comparando o mesmo ingresso
             ingresso.titulo.trim().toLowerCase() ===
-            ingressoObject.titulo.trim().toLowerCase()
+              ingressoObject.titulo.trim().toLowerCase()
           ) {
             throw new Error(ErrorEnum.TITULO_INGRESSO_EXISTENTE);
-          } else {
-            ingresso.titulo = ingresso.titulo.trim().toUpperCase();
           }
         });
+        ingresso.titulo = ingresso.titulo.trim().toUpperCase(); // Converte o título para maiúsculas
       });
     };
     checkTituloIngressos();
+
     const formatStringToNumber = () => {
       evento.tipos_ingressos.forEach((ingresso) => {
         if (ingresso.valor.includes(",")) {
@@ -302,29 +305,39 @@ const EventoManager = {
       titulo: { $regex: titulo.trim().toUpperCase(), $options: "i" },
     }).populate("host");
 
-    if (eventoObjects.length === 0 || titulo.trim() === "") {
+    const montarResponse = (eventos) => {
+      let responseEventos = [];
+      eventos.forEach((eventoObject) => {
+        if (
+          eventoObject.status === StatusEnum.EM_ANDAMENTO &&
+          eventoObject.qtd_ingressos > 0
+        ) {
+          responseEventos.push({
+            id: eventoObject._id,
+            titulo: eventoObject.titulo,
+            hora_evento: eventoObject.hora_evento,
+            img_url: eventoObject.img_url,
+            data_evento:
+              eventoObject.data_evento.replaceAll("-", "/") +
+              " às " +
+              eventoObject.hora_evento,
+            host_name: eventoObject.host.nome_razao,
+          });
+        }
+      });
+      return responseEventos;
+    };
+    if (eventoObjects.length === 0 && titulo.trim() === "") {
+      const eventosRecentes = await EventoModel.find({})
+        .sort({ createdAt: -1 })
+        .limit(10)
+        .populate("host");
+      return montarResponse(eventosRecentes);
+    } else if (eventoObjects.length === 0 && titulo.trim() !== "") {
       return [];
     }
-    let responseEventos = [];
-    eventoObjects.forEach((eventoObject) => {
-      if (
-        eventoObject.status === StatusEnum.EM_ANDAMENTO &&
-        eventoObject.qtd_ingressos > 0
-      ) {
-        responseEventos.push({
-          id: eventoObject._id,
-          titulo: eventoObject.titulo,
-          img_url: eventoObject.img_url,
-          data_evento:
-            eventoObject.data_evento.replaceAll("-", "/") +
-            " às " +
-            eventoObject.hora_evento,
-          status: eventoObject.status,
-          host_name: eventoObject.host.nome_razao,
-        });
-      }
-    });
-    return responseEventos;
+
+    return montarResponse(eventoObjects);
   },
 };
 
