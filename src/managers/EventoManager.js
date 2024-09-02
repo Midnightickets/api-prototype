@@ -358,6 +358,7 @@ const EventoManager = {
       localizacao: eventoObject.localizacao,
       img_url: eventoObject.img_url,
       host: eventoObject.host.nome_razao,
+      host_mp: eventoObject.host.saque.mp_pk,
       tipos_ingressos: eventoObject.tipos_ingressos,
       qtd_ingressos: eventoObject.qtd_ingressos,
     };

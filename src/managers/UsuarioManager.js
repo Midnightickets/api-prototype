@@ -35,7 +35,8 @@ const UsuarioManager = {
             email: newUser.email,
             telefone: newUser.telefone,
             login: newUser.login,
-            senha: newUser.senha
+            senha: newUser.senha,
+            id: newUser._id
         };
     },
     atualizarUsuario: async (usuario) => {
@@ -63,7 +64,8 @@ const UsuarioManager = {
                 email: usuario.email,
                 token: usuario.senha,
                 telefone: usuario.telefone,
-                login: usuario.login
+                login: usuario.login,
+                id: usuario._id
             }
             return usuarioResponse;
         } else{

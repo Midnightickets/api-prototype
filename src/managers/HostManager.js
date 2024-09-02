@@ -75,6 +75,20 @@ const HostManager = {
       throw new Error(error);
     }
   },
+  getHostIdByEvento: async (eventoId) => {
+    const hostObject = await HostModel.findOne({ eventos: eventoId });
+    if (!hostObject) {
+      throw new Error(ErrorEnum.HOST_NOT_FOUND);
+    }
+    return hostObject._id;
+  },
+  getAKMercadoPagoByHost: async (hostId) => {
+    const hostObject = await HostModel.findOne({ _id: hostId });
+    if (!hostObject) {
+      throw new Error(ErrorEnum.HOST_NOT_FOUND);
+    }
+    return hostObject.saque.mp_ac;
+  },
   createAccessPerson: async (host, access) => {
     if(!access.id || !access.nome) {
       throw new Error(ErrorEnum.REQUIRED_FIELDS);

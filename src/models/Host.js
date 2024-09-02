@@ -55,7 +55,7 @@ const hostSchema = new Schema({
         type: [Object],      
     },
     saque:{
-        type: [Object],
+        type: Object,
         required: true,
     },
     },

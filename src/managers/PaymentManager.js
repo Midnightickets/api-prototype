@@ -1,10 +1,10 @@
 require("dotenv").config();
-const { MercadoPagoConfig, Preference } = require("mercadopago");
 const mercadopago = require("mercadopago");
 // const { v4: uuidv4 } = require("uuid");
 const { RecargaPayment: RecargaPaymentModel } = require("../models/RecargaPayment");
 const { ErrorEnum } = require("../enums/Enums");
 const HostManager = require("./HostManager");
+const { MercadoPagoConfig, Preference } = require("mercadopago");
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.PROD_ACCESS_TOKEN,

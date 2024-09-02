@@ -3,9 +3,8 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const ingressoSchema = new Schema({
-    usuario: {
-        type: Schema.Types.ObjectId,
-        ref: 'Usuario',
+    cpf: {
+        type: String,
         required: true,
     },
     code: {
@@ -17,9 +16,10 @@ const ingressoSchema = new Schema({
         ref: 'Evento',
         required: true
     },
-    payment_stats: {
-        type: Object,
-        // required: true
+    payment: {
+        type: Schema.Types.ObjectId,
+        ref: 'IngressoPayment',
+        required: true
     },
     ingresso: {
         type: Object,
